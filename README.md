@@ -1,5 +1,5 @@
 # thesis_latex_template
-This is a latex document template for LEA students, writing a project report a thesis or a dissertation.
+This is a latex document template for IAS students, writing a project report a thesis or a dissertation.
 
 ## Using the template
 Run 'main.tex' using an LaTeX editor, e.g. TexStudio.
