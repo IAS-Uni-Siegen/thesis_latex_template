@@ -1,32 +1,31 @@
-%\documentclass[online, deutsch]{LEAthesis}
-%\documentclass[deutsch]{LEAthesis}
-%\documentclass[english]{LEAthesis}
-% \documentclass[online,english]{LEAthesis}
-\documentclass[english,diss]{LEAthesis}
-% \documentclass[english,diss,final]{LEAthesis}
+%\documentclass[online, deutsch]{IASthesis}
+%\documentclass[deutsch]{IASthesis}
+%\documentclass[english]{IASthesis}
+\documentclass[english, online]{IASthesis}
+%\documentclass[deutsch,diss]{IASthesis}
 
 %% Data for Bachelor/Master
-% \title{Really a Very Very\\ Extremely Long Title\\ for Such a Thesis}
-% \shorttitle{Title in Short}
-% \author{Me Myself}
-% \thesistype{Master Thesis}
-% \thesisnr{MA0815}
-% \matrnr{08193784}
-% \supervisora{Prof. Dr.-Ing. Joachim Böcker}
-% \supervisorb{Prof. Dr.-Ing. N.N.}
-% \filingdate{\today}
-
-% %% Data for Dissertation
-\title{Really a Very Very Extremely Long Title for Such a Thesis}
+\title{Really a Very Very\\ Extremely Long Title\\ for Such a Thesis}
 \shorttitle{Title in Short}
 \author{Me Myself}
-\supervisora{Prof. Dr.-Ing. Joachim Böcker}
-\supervisorb{Prof. Dr.-Ing. N.N.}
-\birthdate{30.02.1999}
-\birthplace{Hintertupfingen}
-\examdate{31.02.2025}
-\thesisnr{333}
-\publicationyear{2030}
+\thesistype{Master Thesis}
+\thesisnr{MA0815}
+\matrnr{08193784}
+\supervisora{Prof. Dr.-Ing. Oliver Wallscheid}
+\supervisorb{Mr. N.N.}
+\filingdate{\today}
+
+%% Data for Dissertation
+% \title{Really a Very Very Extremely Long Title for Such a Thesis}
+% \shorttitle{Title in Short}
+% \author{Me Myself}
+% \supervisora{Prof. Dr.-Ing. Oliver Wallscheid}
+% \supervisorb{Prof. Dr.-Ing. N.N.}
+% \birthdate{30.02.1999}
+% \birthplace{Hintertupfingen}
+% \examdate{31.02.2025}
+% \thesisnr{333}
+% \publicationyear{2030}
 
 \bibliography{references.bib}
 
@@ -39,22 +38,23 @@
 \maketitle              
 
 \frontmatter
-    \makedeclaration
+    \input{chapters/declaration}
     \input{chapters/abstract}
+    
     \tableofcontents
     
 \mainmatter
 
     \input{chapters/introduction.tex}
-    \input{chapters/status.tex}
-    \input{chapters/derivation.tex}
-    \input{chapters/evaluation.tex}
-    \input{chapters/summary.tex}
+    \input{chapters/hints.tex}
+    \input{chapters/software.tex}
+    \input{chapters/plotting.tex}
+    \input{chapters/conclusion.tex}
 
 \backmatter
     
     \input{chapters/appendix.tex}
     \lists
 
-    \ifdiss\iffinal\else\input{chapters/Lebenslauf}\fi\fi
+    \ifdiss\iffinal\input{chapters/Lebenslauf}\fi\fi % CV only for ph.d. dissertation and final version
 \end{document}

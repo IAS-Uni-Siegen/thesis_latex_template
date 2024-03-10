@@ -1,8 +1,9 @@
-% LEA-thesis DOCUMENT CLASS -- version 1.2 (26.10.23)
+% IAS-thesis DOCUMENT CLASS -- version 1.0 (05.03.2024)
 %% Partitially based on svmono.cls and jku.cls
+%% Based on LEAthesis.cls from Paderborn University, LEA Department
 %%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{LEAthesis}[2023/10/26 v12 LEA global LaTeX document class for theses]
+\ProvidesClass{IASthesis}[2024/03/05 v1 IAS global LaTeX document class for theses]
 
 \LoadClass[12pt,twoside,a4paper]{book}
 
@@ -19,7 +20,6 @@
 \DeclareOption{online}{\onlinetrue}
 \DeclareOption{diss}{\disstrue}
 \DeclareOption{final}{\finaltrue}
-%\DeclareOption{upbfonts}{\upbfontstrue}
 \ProcessOptions\relax
 
 
@@ -59,7 +59,7 @@
 \def\corollaryname{Corollary}%
 \def\datename{Date}%
 \def\declaration{Declaration of Authorship}%
-\def\declarationtext{I declare that I have authored this thesis independently, that I have not used other than the declared sources, and that I have explicitly marked all material which has been quoted either literally or by content from the used sources. This paper was not previously presented to another examination board and has not been published.}%
+\def\declarationtext{I declare that I have authored this thesis independently, that I have not used other than the declared sources, and that I have explicitly marked all material (including figures and tables) which has been quoted either literally or by content from the used sources. I am aware that the use of AI-supported software tools is a (permissible) aid, the use and scope of which must be indicated. This paper was not previously presented to another examination board and has not been published.}%
 \def\definitionname{Definition}%
 \def\emailname{e-mail}%
 \def\examplename{Example}%
@@ -72,9 +72,9 @@
 \def\indexname{Index}%
 \def\lemmaname{Lemma}%
 \def\listsname{Lists}%
-\def\contriblistname{List of Contributors}%
-\def\listfigurename{List of Figures}%
-\def\listtablename{List of Tables}%
+\def\contriblistname{List of contributors}%
+\def\listfigurename{List of figures}%
+\def\listtablename{List of tables}%
 \def\mailname{{\it Correspondence to\/}:}%
 \def\nomname{Nomenclature}%
 \def\noteaddname{Note added in proof}%
@@ -96,9 +96,9 @@
 \def\tablename{Tab.}%
 \def\thesisnrname{Thesis Nr.}%
 \def\theoremname{Theorem}%
-\def\titledepartment{Department of Power Electronics and Electrical Drives}%
-\def\titleinstitute{Institute of Electrical Engineering and Information Technology}%
-\def\titleuniversity{Paderborn University}
+\def\titledepartment{Chair of Interconnected Automation Systems}%
+\def\titleinstitute{Department of Electrical Engineering and Computer Science}%
+\def\titleuniversity{Siegen University}
 \fi
 %
 % German section
@@ -118,7 +118,7 @@
  \def\corollaryname{Korollar}%
  \def\datename{Datum}%
  \def\declaration{Eidesstattliche Erklärung}%
- \def\declarationtext{Ich versichere, dass ich die vorliegende wissenschaftliche Arbeit selbstständig verfasst und keine anderen als die angegebenen Hilfsmittel verwendet habe. Die Stellen der Arbeit, die anderen Werken dem Wortlaut oder dem Sinn nach entnommen sind, wurden unter Angabe der Quelle als Entlehnung deutlich gemacht. Das gleiche gilt auch für beigegebene Skizzen und Darstellungen. Diese Arbeit hat in gleicher oder ähnlicher Form meines Wissens nach noch keiner Prüfungsbehörde vorgelegen.}%
+ \def\declarationtext{Ich versichere, dass ich die vorliegende wissenschaftliche Arbeit selbstständig verfasst und keine anderen als die angegebenen Hilfsmittel verwendet habe. Die Stellen der Arbeit, die anderen Werken dem Wortlaut oder dem Sinn nach entnommen sind, wurden unter Angabe der Quelle als Entlehnung deutlich gemacht. Das gleiche gilt auch für beigegebene Skizzen und Darstellungen. Mir ist bewusst, dass die Verwendung von KI-gestützen Softwarewerkzeugen ein (zulässiges) Hilfsmittel darstellt, dessen Nutzung und dessen Umfang angegeben werden muss. Diese Arbeit hat in gleicher oder ähnlicher Form meines Wissens nach noch keiner Prüfungsbehörde vorgelegen.}%
  \def\definitionname{Definition}%
  \def\emailname{E-mail}%
  \def\examplename{Beispiel}%
@@ -155,14 +155,12 @@
  \def\tablename{Tab.}%
  \def\thesisnrname{Nummer der Arbeit}%
 \def\theoremname{Theorem}%
-\def\titledepartment{Fachgebiet Elektrische Antriebstechnik und Leistungselektronik}%
-\def\titleinstitute{Institut für Elektrotechnik und Informationstechnik}%
-\def\titleuniversity{Universit\"at Paderborn}
+\def\titledepartment{Professur für Vernetzte Automatisierungssysteme}%
+\def\titleinstitute{Department Elektrotechnik und Informatik}%
+\def\titleuniversity{Universit\"at Siegen}
 \fi
 
 %% Hyphenation
-\ifenglish\RequirePackage[english=usenglish]{hyphsubst}\fi
-\ifdeutsch\RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}\fi
 \RequirePackage[hyphens]{url}
 
 %%Graphics
@@ -192,6 +190,7 @@
 \RequirePackage{amsbsy}									% Darstellung fettgedruckter mathematischer Symbole
 \RequirePackage{bm}
 \RequirePackage[scaled]{helvet}
+\RequirePackage{lipsum}               % for dummy text
 
 \RequirePackage[
 free-standing-units, 
@@ -211,6 +210,7 @@ multi-part-units = repeat
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{upquote}
+
 %\RequirePackage{microtype}
 \RequirePackage{xspace}
 \RequirePackage{blindtext}
@@ -228,51 +228,13 @@ multi-part-units = repeat
     \RequirePackage[english]{babel}
 \fi
 
-% \ifupbfonts
-% \RequirePackage{fontspec}
-% \setsansfont{SegoeUI}[
-%     Path=./fonts/SegoeUI/,
-%     Extension = .ttf,
-%     UprightFont=*-Regular,
-%     BoldFont=*-Bold,
-%     ItalicFont=*-Italic,
-%     BoldItalicFont=*-BoldItalic
-%     ]
-%
-% \setmainfont{SegoeUI}[
-%     Path=./fonts/SegoeUI/,
-%     Extension = .ttf,
-%     UprightFont=*-Regular,
-%     BoldFont=*-Bold,
-%     ItalicFont=*-Italic,
-%     BoldItalicFont=*-BoldItalic
-%     ]
-% %
-% % \setsansfont{Karla}[
-% %     Path=./fonts/Karla/,
-% %     Extension = .ttf,
-% %     UprightFont=*-Regular,
-% %     BoldFont=*-Bold,
-% %     ItalicFont=*-Italic,
-% %     BoldItalicFont=*-BoldItalic
-% %     ]
-% %
-% % \setmainfont{Karla}[
-% %     Path=./fonts/Karla/,
-% %     Extension = .ttf,
-% %     UprightFont=*-Regular,
-% %     BoldFont=*-Bold,
-% %     ItalicFont=*-Italic,
-% %     BoldItalicFont=*-BoldItalic
-% %     ]
-%
-% \fi
-
-
-
 
 \RequirePackage{algorithm}
 \RequirePackage{algpseudocode}
+
+\RequirePackage{tcolorbox}
+\newtcolorbox{tbox}[2][1.0]{colback=lightgray, colframe=darkgray, fonttitle=\bfseries, adjusted title=#2, boxsep=1mm, left=1mm, right=1mm, width=#1\textwidth}
+
 
 
 \urlstyle{same}  % don't use monospace font for urls
@@ -443,7 +405,7 @@ multi-part-units = repeat
 }
 %
 
-%% Verzeichnisse
+%% Indices
 \makeindex
 \RequirePackage[acronym,shortcuts,nopostdot,nogroupskip,section,nonumberlist]{glossaries}
 \renewcommand*{\glsgroupskip}{}
@@ -511,6 +473,8 @@ multi-part-units = repeat
 \newenvironment{abstract}
 {\clearpage
 \chapter*{\abstractname}
+\thispagestyle{empty}
+\setcounter{page}{0}
 }{\clearpage}
 
 
@@ -646,16 +610,14 @@ multi-part-units = repeat
   \rightskip=\z@ \@plus 3cm
   %%%%%%%%%%
   \begin{center}
-	\includegraphics[height=2.5cm]{Logos/UPB_Logo_DE_vierfarbig_CMYK}
-	\hfill
-	\includegraphics[height=2cm]{Logos/EIM}
+	\includegraphics[height=3.0cm]{Logos/Logo_Kombi_IAS_Blau}
 				%\linespread{1.0}
 				\sffamily
 				\vfill
 				{\Huge \begin{spacing}{1.1}\textbf{\\[13mm] \@title \\[15mm]}\end{spacing}}
 				\vfill
-				\Large{Der Fakultät für Elektrotechnik, Informatik und Mathematik}\\
-				\Large{der Universität Paderborn}\\[5mm]
+				\Large{Der Naturwissenschaftlich-Technischen Fakultät}\\
+				\Large{der Universität Siegen}\\[5mm]
 				\large{zur Erlangung des akademischen Grades\\[5mm]
 				\Large{Doktor der Ingenieurwissenschaften (Dr.-Ing.)}}\\[5mm]
                 \iffinal genehmigte\ \else vorgelegte\ \fi Dissertation \\
@@ -668,8 +630,8 @@ multi-part-units = repeat
                   \Large{Tag der mündlichen Prüfung:\ \ } & \Large{\@examdate}
                   \end{tabular}\\[12mm]
 
-                  \Large{Paderborn \@publicationyear} \\[6mm]
-                  \Large{Diss. EIM-E/\@thesisnr}
+                  \Large{Siegen \@publicationyear} \\[6mm]
+                  \Large{Diss. \@thesisnr}
 				}\else{
                   \Large{geboren am \@birthdate\ in \@birthplace}
                 }\fi
@@ -689,12 +651,9 @@ multi-part-units = repeat
   \parindent=\z@
   \pretolerance=10000
   \rightskip=\z@ \@plus 3cm
-  \ifenglish\includegraphics[height=2.5cm]{Logos/UPB_Logo_ENG_coloured_CMYK}\fi
-  \ifdeutsch\includegraphics[height=2.5cm]{Logos/UPB_Logo_DE_vierfarbig_CMYK} \fi
-  \hfill
-  \includegraphics[height=2cm]{Logos/logo_lea}
-  \\[5ex]
  \begin{center}
+  \includegraphics[height=3cm]{Logos/Logo_Kombi_IAS_Blau.pdf}
+  \\[5ex]
 \textbf{\titleinstitute\\[.2ex]
 \titleuniversity\\[.2ex]
 \titledepartment\\[.2ex]
@@ -720,17 +679,5 @@ multi-part-units = repeat
 }\fi
 }
 
-%%% Declaration
-\def\makedeclaration{
- \chapter*{\declaration}
-  \declarationtext\vskip5ex
-  \begin{tabbing}
-Paderborn, \hspace{0.4cm} \= \rule[-0.15\baselineskip]{5cm}{.4pt}  \hspace{0.7cm}\= \rule[-0.15\baselineskip]{6cm}{.4pt}\\
-% \renewcommand{\baselinestretch}{0.5}\normalsize
-\>\small{\datename}\>\small{\signature}
-\end{tabbing}
-}
-
-
 \endinput
-%end of file LEAthesis.cls
+%end of file IASthesis.cls
