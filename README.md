@@ -34,7 +34,7 @@ Do not modify the `.cls` file. Add own LaTeX packages into the `chapters/header.
 ## Improvements and bugs
 Please open an issue or pull request to suggest changes. Critical feedback and improvement hints are always welcome and highly appreciated!
 
-## Preview
+## Preview and writing advice (click on picture for PDF)
 [![Preview of first page](first_page.png)](https://ias-uni-siegen.github.io/thesis_latex_template/thesis.pdf)
 
 Compiled PDF (GitHub Pages): https://ias-uni-siegen.github.io/thesis_latex_template/thesis.pdf
