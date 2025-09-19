@@ -206,6 +206,7 @@ multi-part-units = repeat
 \RequirePackage{ifxetex,ifluatex}
 \RequirePackage{fix-cm}
 \RequirePackage{setspace}
+\RequirePackage{enumitem}
 \RequirePackage{datetime2}
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
@@ -232,14 +233,93 @@ multi-part-units = repeat
 \RequirePackage{algorithm}
 \RequirePackage{algpseudocode}
 
-\RequirePackage{tcolorbox}
+\RequirePackage{xcolor}
+%--- Colorblind-friendly (Okabe–Ito) ---
+% Reference palette: #009E73 (bluish green) and more aggressive red (still colorblind-friendly).
+\definecolor{oiGreen}{HTML}{009E73}
+\definecolor{oiVermilion}{HTML}{CC2936}  % More aggressive red, colorblind-friendly
+\definecolor{oiGrey}{HTML}{5D5D5D}       % Neutral grey for info boxes
+
+% Softer fills derived from the brand hues:
+\colorlet{oiGreenFill}{oiGreen!6!white}
+\colorlet{oiVermilionFill}{oiVermilion!8!white}
+\colorlet{oiGreyFill}{oiGrey!8!white}
+
+
+\RequirePackage[most]{tcolorbox}
 \newtcolorbox{tbox}[2][1.0]{colback=lightgray, colframe=darkgray, fonttitle=\bfseries, adjusted title=#2, boxsep=1mm, left=1mm, right=1mm, width=#1\textwidth}
+
+\RequirePackage{xparse}          % for optional args
+
+% Icons (Font Awesome 5)
+%   Requires TeX Live 2019+ (or equivalent). If you only have FA4, swap to \usepackage{fontawesome} and replace \faIcon{...}.
+\RequirePackage{fontawesome5}
+
+%--- Shared base style for example boxes (layout & typography) ---
+\tcbset{
+  calloutbase/.style={
+    enhanced, breakable,                       % page breaks OK
+    boxrule=0.6pt, arc=2pt,
+    left=12mm, right=6mm, top=6pt, bottom=6pt, % room for the left icon
+    colback=white, colframe=black!25,
+    fonttitle=\bfseries, coltitle=black,       % black title text
+    attach boxed title to top left={yshift=-2mm, xshift=2mm},
+    boxed title style={colback=white, colframe=black!25},
+    % Ensure comfortable list spacing inside all callout boxes
+    before upper={%
+      \setlist[itemize]{itemsep=4pt,parsep=2pt,topsep=4pt,partopsep=3pt}%
+      \setlist[enumerate]{itemsep=4pt,parsep=2pt,topsep=4pt,partopsep=3pt}%
+      \setlist[description]{itemsep=4pt,parsep=2pt,topsep=4pt,partopsep=3pt}%
+    }
+  }
+}
+
+%--- Helper: icon overlays so the symbol appears on every segment (unbroken/first/middle/last) ---
+\newcommand{\CalloutOverlay}[1]{%
+  \node[anchor=west, xshift=3mm] at (frame.west) {#1};%
+}
+\newcommand{\FAiconsize}{\large} % tweak icon size here
+
+%=== SUCCESS (positive) box ===
+\NewTColorBox{successbox}{ O{} O{} }{%
+  calloutbase,
+  title={\IfNoValueTF{#2}{Success}{#2}},      % \begin{successbox}[Optional title]
+  colframe=oiGreen, colback=oiGreenFill,
+  borderline west={3pt}{0pt}{oiGreen},        % thick colored rule for non-color cue
+  overlay unbroken={\CalloutOverlay{\textcolor{oiGreen}{\FAiconsize\faIcon{check-circle}}}},
+  overlay first   ={\CalloutOverlay{\textcolor{oiGreen}{\FAiconsize\faIcon{check-circle}}}},
+  #1
+}
+
+%=== ERROR (negative) box ===
+\NewTColorBox{errorbox}{ O{} O{} }{%
+  calloutbase,
+  title={\IfNoValueTF{#2}{Error}{#2}},        % \begin{errorbox}[Optional title]
+  colframe=oiVermilion, colback=oiVermilionFill,
+  borderline west={3pt}{0pt}{oiVermilion},
+  overlay unbroken={\CalloutOverlay{\textcolor{oiVermilion}{\FAiconsize\faIcon{times-circle}}}},
+  overlay first   ={\CalloutOverlay{\textcolor{oiVermilion}{\FAiconsize\faIcon{times-circle}}}},
+  #1
+}
+
+%=== INFO (explanatory) box ===
+\NewTColorBox{infobox}{ O{} O{} }{%
+  calloutbase,
+  title={\IfNoValueTF{#2}{Info}{#2}},         % \begin{infobox}[Optional title]
+  colframe=oiGrey, colback=oiGreyFill,
+  borderline west={3pt}{0pt}{oiGrey},         % thick colored rule for non-color cue
+  overlay unbroken={\CalloutOverlay{\textcolor{oiGrey}{\FAiconsize\faIcon{info-circle}}}},
+  overlay first   ={\CalloutOverlay{\textcolor{oiGrey}{\FAiconsize\faIcon{info-circle}}}},
+  #1
+}
+
+
 
 
 
 \urlstyle{same}  % don't use monospace font for urls
 
-\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=99,minnames=3,natbib,autopunct,backref=false,doi=false,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
+\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=99,minnames=3,natbib,autopunct,backref=false,doi=true,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
 %\RequirePackage[backend=biber,style=alphabetic,giveninits=true,maxnames=99,minnames=3,natbib,autopunct,backref=false,doi=false,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
 
 \RequirePackage[belowskip=12pt,aboveskip=4pt,figurename=\figurename,tablename=\tablename,labelfont=bf]{caption}

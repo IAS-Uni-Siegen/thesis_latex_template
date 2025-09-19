@@ -16,7 +16,7 @@ Some general hints on citations:
 
 \section{Upper and lower case formatting}
 \label{sec:formatting}
- In titles and captions, capitalize only the beginning of the sentence. In the main text, capitalize the first letter of the first word of a sentence. Hence, stick to lower case formatting as the default representation. In contrast, proper nouns need to be capitalized whenever used (e.g, ``Maxwell's equations'' or ``Kalman filter''). Note that technical terms are not necessarily proper nouns and should not be capitalized (e.g., ``state-space model'' or ``convolutional neural network''). Also, when introducing abbreviations, there is no need to capitalize the full term (e.g., ``recurrent neural network (RNN)'').
+ In titles and captions, capitalize only the beginning of the sentence. In the main text, capitalize the first letter of the first word of a sentence. Hence, stick to lower case formatting as the default representation. In contrast, proper nouns need to be capitalized whenever used (e.g, \enquote{Maxwell's equations} or \enquote{Kalman filter}). Note that technical terms are not necessarily proper nouns and should not be capitalized (e.g., \enquote{state-space model} or \enquote{convolutional neural network}). Also, when introducing abbreviations, there is no need to capitalize the full term (e.g., \enquote{recurrent neural network (RNN)}).
 
 \section{Tables}
 \label{sec:features}
@@ -60,7 +60,10 @@ where $x(t)\in\mathbb{R}$ is the state, $u(t)\in\mathbb{R}$ is the input, $f(\cd
 \end{equation*}
 represents a linear time-invariant state-space example of  \eqref{eq:example}, where $\bm{A}\in\mathbb{R}^{n\times n}$ is the state matrix, $\bm{b}\in\mathbb{R}^{n}$ is the input vector and $u(t)\in\mathbb{R}$ is the input vector (which is the only non-bold symbol in the above equation due to its scalar nature). Note also that the last example equation is not numbered which is achieved by using the \verb|\begin{equation*}|...\verb|\end{equation*}| environment. Discontinuing the numbering of an equation can be useful when the equation is not referred to in the text and if it is of minor importance.
 
-Using the \verb|\eqref{}| command one can directly refer to a labeled equation. For example, \eqref{eq:example} is a simple example of a first-order ordinary differential equation. Within the STEM community it is good practice to refer to equations in the parenthesis style (e.g., ``...as shown in \eqref{eq:example}''), that is, the parenthesis is already indicating an explicit reference to an equation making the usage of the word ``equation'' redundant. 
+
+\begin{infobox}[][Referring to equations]
+Using the \verb|\eqref{}| command one can directly refer to a labeled equation. For example, \eqref{eq:example} is a simple example of a first-order ordinary differential equation. Within the STEM community it is good practice to refer to equations in the parenthesis style (e.g., \enquote{...as shown in \eqref{eq:example}}), that is, the parenthesis is already indicating an explicit reference to an equation making the usage of the word \enquote{equation} redundant. 
+\end{infobox}
 
 
 Equations can also be aligned and split:
@@ -75,7 +78,69 @@ Equations can also be aligned and split:
 
 In \eqref{eq:splitline} the equation was split into two lines. Use this for long equations. Note also that the above equations are integrated in the text and reading flow which includes proper interpunctuation, that is, full stops and commas apply also to equations as if they would be normal text.
 
-Note: Using variables, the variable itself should be in italic letters, while any superscript or subscript should be in upright letters (unless it is a mathematical variable, e.g., a counting index such as $x_i$ with $i=1,2,\ldots$). Hence, $x_\mathrm{norm}(t)$ is correct, while $x_{norm}(t)$ is not. Likewise, mathematical operators (e.g., differential operator, transpose, etc.) are generally represented in upright letters, that is, $\max\left\{x_\mathrm{norm}(t)\right\}$ is correct, while $max \left\{x_{\mathrm{norm}}(t) \right\}$ is not.
+\subsection{Mathematical indices}
+
+The following conventions for typesetting variables, indices, and operators follow internationally recognized standards and guides, in particular \cite{ISO80000-2-2019,NIST-SP-811}.
+
+\begin{successbox}[][Correct formatting]
+Normalized value: $x_\mathrm{norm}(t)$ \\
+Maximum value: $\max\left\{x_\mathrm{norm}(t)\right\}$ \\
+An indexed variable: $x_i$
+\end{successbox}%
+
+\begin{errorbox}[][Incorrect formatting]
+Normalized value: $x_{norm}(t)$ \\
+Maximum value: $max \left\{x_{\mathrm{norm}}(t) \right\}$\\
+An indexed variable: $x_{\mathrm{i}}$
+\end{errorbox}
+
+\begin{infobox}[][Index and operator rules]
+For mathematical typesetting, follow these conventions:
+
+\begin{itemize}
+	\item \textbf{Variables} are set in italic type (e.g., $x, y, t$).
+	\item \textbf{Descriptive subscripts/superscripts} (abbreviations of words) should be in upright (roman) font using \verb|\mathrm{...}| (e.g., $x_\mathrm{norm}$, $T_\mathrm{max}$).
+	\item \textbf{Variable indices} in subscripts/superscripts remain in italic type (e.g., $x_i$, where $i$ is a variable index).
+	\item \textbf{Mathematical operators} (e.g., `max`, `sin`, `log`, differential `d`) should be in upright font. Use predefined commands like \verb|\max| or \verb|\sin|, or \verb|\mathrm{d}| for the differential operator.
+\end{itemize}
+This visually distinguishes textual descriptions from mathematical variables.
+\end{infobox}
+
+\subsection{Interpunctuation in equations}
+
+\begin{successbox}[][Correct punctuation]
+The area of a circle is given by
+\begin{equation}
+A = \pi r^2,
+\end{equation}
+where $r$ is the radius. For a sphere, the volume formula is
+\begin{equation}
+V = \frac{4}{3}\pi r^3.
+\end{equation}
+\end{successbox}
+
+\begin{errorbox}[][Missing punctuation]
+The area of a circle is given by
+\begin{equation}
+A = \pi r^2
+\end{equation}
+where $r$ is the radius. For a sphere, the volume formula is
+\begin{equation}
+V = \frac{4}{3}\pi r^3
+\end{equation}
+\end{errorbox}
+\begin{infobox}[][Punctuation rules]
+Mathematical equations should be punctuated as part of the sentence structure:
+
+\begin{itemize}
+\item Use a \textbf{comma} when the equation is followed by more text (like \enquote{where} clauses)
+\item Use a \textbf{period} when the equation ends the sentence
+\item Never leave equations \enquote{floating} without punctuation
+\end{itemize}
+
+The punctuation helps readers understand the logical flow and relationship between mathematical expressions and explanatory text. Likewise, ensure to integrate equations smoothly into the surrounding text such that they read naturally as part of the narrative.
+\end{infobox}
+
 
  \section{Units}
  \label{sec:units}
