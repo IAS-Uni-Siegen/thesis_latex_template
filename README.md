@@ -1,3 +1,4 @@
+[![Build PDF](https://github.com/IAS-Uni-Siegen/thesis_latex_template/actions/workflows/buildPDF.yml/badge.svg)](https://github.com/IAS-Uni-Siegen/thesis_latex_template/actions/workflows/buildPDF.yml)
 [![CC BY 4.0][cc-by-shield]][cc-by]
 [![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/)
 
@@ -34,4 +35,6 @@ Do not modify the `.cls` file. Add own LaTeX packages into the `chapters/header.
 Please open an issue or pull request to suggest changes. Critical feedback and improvement hints are always welcome and highly appreciated!
 
 ## Preview
-![](first_page.png)
+[![Preview of first page](first_page.png)](https://ias-uni-siegen.github.io/thesis_latex_template/thesis.pdf)
+
+Compiled PDF (GitHub Pages): https://ias-uni-siegen.github.io/thesis_latex_template/thesis.pdf

@@ -1,0 +1,57 @@
+name: Build LaTeX PDF
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Thesis_template/**'
+      - '.github/workflows/buildPDF.yml'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up TeX Live
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: Thesis_template
+          root_file: main.tex
+          latexmk_use_lualatex: false
+          latexmk_shell_escape: true
+          extra_system_packages: biber ghostscript
+
+      - name: Move PDF to publish folder
+        run: |
+          mkdir -p built
+          mv Thesis_template/main.pdf built/thesis.pdf
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: built
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
