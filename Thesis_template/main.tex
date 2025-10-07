@@ -4,7 +4,7 @@
 \documentclass[english, online]{IASthesis}
 %\documentclass[deutsch,diss]{IASthesis}
 
-%% Data for Bachelor/Master
+%% Data for bachelor or master thesis
 \title{Really a Very Very\\ Extremely Long Title\\ for Such a Thesis}
 \shorttitle{Title in Short}
 \author{Me Myself}
@@ -15,7 +15,7 @@
 \supervisorb{Mr. N.N.}
 \filingdate{\today}
 
-%% Data for Dissertation
+%% Data for ph.d. thesis
 % \title{Really a Very Very Extremely Long Title for Such a Thesis}
 % \shorttitle{Title in Short}
 % \author{Me Myself}
@@ -48,7 +48,6 @@
     \input{chapters/introduction.tex}
     \input{chapters/hints.tex}
     \input{chapters/software.tex}
-    \input{chapters/plotting.tex}
     \input{chapters/conclusion.tex}
 
 \backmatter
@@ -56,5 +55,5 @@
     \input{chapters/appendix.tex}
     \lists
 
-    \ifdiss\iffinal\input{chapters/Lebenslauf}\fi\fi % CV only for ph.d. dissertation and final version
+    \ifdiss\iffinal\input{chapters/CV}\fi\fi % CV only for ph.d. dissertation and final version (otherwise will not be printed). Is always structured in German, as the CV is only needed for the formal ph.d. evaluation process at our faculty.
 \end{document}

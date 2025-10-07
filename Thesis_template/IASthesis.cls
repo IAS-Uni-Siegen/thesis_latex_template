@@ -201,6 +201,7 @@ per-mode=fraction,
 separate-uncertainty = true,
 multi-part-units = repeat
 ]{siunitx}
+\DeclareSIUnit{\point}{pt} % define point unit for font sizes
 
 %% Text settings
 \RequirePackage{ifxetex,ifluatex}
@@ -234,16 +235,20 @@ multi-part-units = repeat
 \RequirePackage{algpseudocode}
 
 \RequirePackage{xcolor}
-%--- Colorblind-friendly (Okabe–Ito) ---
-% Reference palette: #009E73 (bluish green) and more aggressive red (still colorblind-friendly).
-\definecolor{oiGreen}{HTML}{009E73}
-\definecolor{oiVermilion}{HTML}{CC2936}  % More aggressive red, colorblind-friendly
-\definecolor{oiGrey}{HTML}{5D5D5D}       % Neutral grey for info boxes
+%--- Colorblind-friendly color palette (derived from Okabe–Ito scheme) ---
+
+
+\definecolor{oiGreen}{HTML}{009E73}  % #009E73 (bluish green)
+\definecolor{oiVermilion}{HTML}{CC2936}  % #CC2936 (more aggressive red)
+\definecolor{oiGrey}{HTML}{5D5D5D}       % #5D5D5D (grey)
 
 % Softer fills derived from the brand hues:
-\colorlet{oiGreenFill}{oiGreen!6!white}
+\colorlet{oiGreenFill}{oiGreen!6!white} 
 \colorlet{oiVermilionFill}{oiVermilion!8!white}
 \colorlet{oiGreyFill}{oiGrey!8!white}
+
+\RequirePackage[Tol, pgf]{colorblind} % Tol colorblind-friendly palette
+
 
 
 \RequirePackage[most]{tcolorbox}
@@ -319,8 +324,8 @@ multi-part-units = repeat
 
 \urlstyle{same}  % don't use monospace font for urls
 
-\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=99,minnames=3,natbib,autopunct,backref=false,doi=true,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
-%\RequirePackage[backend=biber,style=alphabetic,giveninits=true,maxnames=99,minnames=3,natbib,autopunct,backref=false,doi=false,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
+\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=15,minnames=3,natbib,autopunct,backref=false,doi=true,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
+
 
 \RequirePackage[belowskip=12pt,aboveskip=4pt,figurename=\figurename,tablename=\tablename,labelfont=bf]{caption}
 
@@ -330,7 +335,7 @@ multi-part-units = repeat
 
 %% Tikz
 \RequirePackage{pgfplots}
-\usetikzlibrary{shapes, arrows, positioning, fit, calc, patterns, decorations.pathmorphing,decorations.pathreplacing,decorations.shapes,decorations.text}
+\usetikzlibrary{shapes, arrows, positioning, fit, calc, patterns, decorations.pathmorphing,decorations.pathreplacing,decorations.shapes,decorations.text, math}
 \usepgfplotslibrary{groupplots}% Use this package to import Inkscape generated pdfs with pdf_tex files
 \pgfplotsset{compat=newest}
 \RequirePackage{import}
