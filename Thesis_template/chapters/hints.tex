@@ -165,7 +165,7 @@ In \figref{fig:MPC} is an example how to insert figures into the manuscript. We 
 \begin{figure}[htb]
 	\centering
     \includegraphics{fig/inkscape/MPC.pdf}
-    \caption{Simplified model predictive control (MPC) scheme imported from an Inkscape file.}
+    \caption{Simplified \gls{mpc} scheme imported from an Inkscape document.}
 	\label{fig:MPC}
 \end{figure}
 
@@ -179,7 +179,7 @@ The package \href{https://ctan.org/pkg/pgf}{pgf} provides a powerful tool to cre
 \begin{figure}[ht]
     \centering
     \input{fig/tikz/tikz_timeseries}
-    \caption{Example of a tikz figure (timeseries plot).}
+    \caption{Example of a tikz figure (time series plot).}
     \label{fig:tikz_example_01}
 \end{figure}
 \begin{figure}[ht]
@@ -191,32 +191,49 @@ The package \href{https://ctan.org/pkg/pgf}{pgf} provides a powerful tool to cre
 
 
 \subsection{Circuits with circuitikz}
-\figref{fig:circuitikz_example} is fully drawn by \LaTeX code. Go to the code to see how this figure is created.
+The specialized package \href{https://ctan.org/pkg/circuitikz}{circuitikz} provides a powerful tool to create high-quality electrical circuit diagrams directly in \LaTeX. An example is shown in \figref{fig:circuitikz_example}. The code for this figure can be found in the \texttt{fig/circuitikz} folder.
 \begin{figure}[ht]
     \centering
-    \input{fig/circuitikz/Circ_Widerstand}
+    \input{fig/circuitikz/circ_example}
     \caption{Example of a circuitikz figure.}
     \label{fig:circuitikz_example}
 \end{figure}
 
 
 \subsection{Circuits with Inkscape library}
-There is a curated Inkscape template for many electrical engineering symbols hosted on Github. \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{https://github.com/upb-lea/Inkscape\_electric\_Symbols}. An overview is shown in \figref{fig:inkscape_example}. The included figure is a pdf-file, what is generated before by an Inkscape drawing.
+As an alternative to circuitikz, there is a curated Inkscape template for many electrical engineering symbols (incl. circuits) hosted on GitHub: \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{https://github.com/upb-lea/Inkscape\_electric\_Symbols}. An overview is shown in \figref{fig:inkscape_library}. The included figure is a pdf-file, which is generated before by an Inkscape export. Both ways, circuitikz and Inkscape, are perfectly fine and can be used depending on the user's preference.
 
 \begin{figure}[htb]
 	\centering
     \includegraphics[]{fig/inkscape/Inkscape_Symbols_All.pdf}
-	\caption{Example of an Inkscape figure.}
-	\label{fig:inkscape_example}
+	\caption{Overview of symbols provided by the \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{Inkscape electrical symbols library}.}
+	\label{fig:inkscape_library}
 \end{figure}
 
 \subsection{Color schemes}
 When creating figures, it is important to use color schemes that are accessible to all readers, including those with color vision deficiencies. We recommend sticking to a predefined colorblind-friendly scheme, such as the \href{https://sronpersonalpages.nl/~pault/}{Paul Tol's} color schemes. Within \LaTeX, the \href{https://ctan.org/pkg/colorblind}{colorblind} package provides easy access to these color schemes.
+
+\begin{figure}[H]
+  \centering
+	\begin{tikzpicture}[x=1.0cm, y=0.6cm]
+		\fill[T-Q-V1] (0,0) circle[radius=0.45cm];
+		\fill[T-Q-V2] (2,0) circle[radius=0.45cm];
+		\fill[T-Q-V3] (4,0) circle[radius=0.45cm];
+		\fill[T-Q-V4] (6,0) circle[radius=0.45cm];
+		\fill[T-Q-V5] (8,0) circle[radius=0.45cm];
+		\fill[T-Q-V6] (10,0) circle[radius=0.45cm];
+	\end{tikzpicture}
+  \caption{Paul Tol's \textit{vibrant} qualitative colour scheme (T-Q-V1…V6).}
+  \label{fig:vibrant}
+\end{figure}
+
 \begin{figure}[H]
 	\centering
 	\drawSchemeC[0.7\textwidth]{T-D-S}\\
-	\caption{Exemplary sunset color scheme from Paul Tol's color schemes.}
+	\caption{Paul Tol's \textit{sunset} diverging colour scheme (T-D-S).}
 \end{figure}
+
+
 
 
 \section{Acronyms and glossaries}
@@ -225,3 +242,15 @@ This is an example of an acronym entry: \gls{chp}. The first time an acronym is 
 
 This is an example of a glossary entry: \gls{CHPg}. The glossary is different from the acronyms as it lists terms together with a short definition for those terms (with the glossary list at the end of the document). A glossary is sometimes used in larger books or theses to explain terms that are not commonly known, but for most scientific theses or papers it is rather uncommon to use a glossary. Further details on the usage of the \href{https://ctan.org/pkg/glossaries}{glossaries} package can be found in its documentation.
 
+\section{Printing}
+When printing the final version of the thesis, note the following:
+\begin{itemize}
+	\item The class file has the option \verb|online| to create a PDF version of the thesis that is optimized for on-screen reading. Conversely, if you want to print the thesis on paper, remove the \verb|online| option from the \verb|\documentclass[...]{IASthesis}| command in the \texttt{main.tex} file. This will adjust the margins and layout for printing on paper.
+	\item When printing on paper, utilize double-sided printing to save paper and resources. Do not(!) print single-sided.
+\end{itemize}
+
+\subsection{Publish your work}
+\label{sec:publish}
+We encourage students to voluntarily publish their submitted work through the University Siegen library. Visit the following link for more information on the publishing process: \href{https://www.ub.uni-siegen.de/en/search-tools-and-catalogues/eresources/opus-siegen/information-for-authors/publication-types/bachelor-and-master-theses/}{https://www.ub.uni-siegen.de/en/search-tools-and-catalogues/eresources/opus-siegen/information-for-authors/publication-types/bachelor-and-master-theses/}.
+
+If you like to publish your work, follow this official process first. Refrain from publishing your work on other third-party platforms (e.g., ResearchGate, Academia.edu, etc.) before the finalizing the official publication process! 

@@ -1,26 +1,26 @@
-% IAS-thesis DOCUMENT CLASS -- version 1.0 (05.03.2024)
+% IAS-thesis DOCUMENT CLASS -- version 1.1 (2025/10/08)
 %% Partitially based on svmono.cls and jku.cls
 %% Based on LEAthesis.cls from Paderborn University, LEA Department
 %%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{IASthesis}[2024/03/05 v1 IAS global LaTeX document class for theses]
+\ProvidesClass{IASthesis}[2025/10/08 v1.1 IAS global LaTeX document class for theses]
 
-\LoadClass[12pt,twoside,a4paper]{book}
+\LoadClass[12pt,twoside,a4paper]{book} % Base class and page layout
 
 
-\newif\ifdeutsch
-\newif\ifenglish
-\newif\ifonline
-\newif\ifdiss
-\newif\iffinal
-%\newif\ifupbfonts
+\newif\ifdeutsch  % German language flag
+\newif\ifenglish  % English language flag
+\newif\ifonline   % Online (single-sided, header style) variant
+\newif\ifdiss     % Dissertation variant
+\newif\iffinal    % Final (approved) version toggle
 
-\DeclareOption{english}{\englishtrue}
-\DeclareOption{deutsch}{\deutschtrue}
-\DeclareOption{online}{\onlinetrue}
-\DeclareOption{diss}{\disstrue}
-\DeclareOption{final}{\finaltrue}
-\ProcessOptions\relax
+
+\DeclareOption{english}{\englishtrue} % Class option to set English strings
+\DeclareOption{deutsch}{\deutschtrue} % Class option to set German strings
+\DeclareOption{online}{\onlinetrue}   % Optimize layout for online reading
+\DeclareOption{diss}{\disstrue}       % Dissertation title page and fields
+\DeclareOption{final}{\finaltrue}     % Marks final, approved dissertation
+\ProcessOptions\relax                  % Apply class options
 
 
 
@@ -161,68 +161,77 @@
 \fi
 
 %% Hyphenation
-\RequirePackage[hyphens]{url}
+\RequirePackage[hyphens]{url} % Allow URL line breaks at hyphens
 
 %%Graphics
-\RequirePackage{graphicx,grffile}
-\graphicspath{{fig/}{include/}{figures/}{images/}{../include/}{../figures/}{../images/}}
+\RequirePackage{graphicx,grffile} % Graphics inclusion + robust file name handling
+\graphicspath{{fig/}{include/}{figures/}{images/}{../include/}{../figures/}{../images/}} % Graphics search paths
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 % Scale images if necessary, so that they will not overflow the page
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\RequirePackage{epsfig}
+\RequirePackage{epsfig} % Legacy EPS inclusion support
 %\pdfminorversion=7
-\RequirePackage{rotating}
-\RequirePackage[section]{placeins}% Grafiken in der dazugehÃ¶rigen section eingefÃŒgt
-\RequirePackage{lmodern,etoolbox,letltxmacro}
-\RequirePackage{setspace}
+\RequirePackage{rotating} % Sideways figures/tables
+\RequirePackage[section]{placeins}% Keep floats (figures/tables) within their respective section
+\RequirePackage{lmodern,etoolbox,letltxmacro} % Latin Modern fonts, macro utilities, LaTeX macro helpers
+\RequirePackage{setspace} % Line spacing control
 
 %% Math env
-\RequirePackage[sumlimits,intlimits]{amsmath}	% mathematische Formelsetzung
-\RequirePackage{amssymb}								% In diesem package sind die AMS-Symbole enthalten
-\RequirePackage{amstext}								% Text innerhalb einer Formel
-\RequirePackage{amsfonts}								% FÃŒr zusÃ€tzliche Schriften und Zeichen
-\RequirePackage{amsxtra}								% Sonderfunktionen
-\RequirePackage{amsopn}									% Definition eigener Operatoren
-\RequirePackage{amscd}									% Erstellen einafcher kommutativer Diagramme
-\RequirePackage{amsbsy}									% Darstellung fettgedruckter mathematischer Symbole
-\RequirePackage{bm}
-\RequirePackage[scaled]{helvet}
-\RequirePackage{lipsum}               % for dummy text
+\RequirePackage[sumlimits,intlimits]{amsmath}	% Mathematical typesetting
+\RequirePackage{amssymb}						% AMS symbol collection
+\RequirePackage{amstext}						% Text inside a formula
+\RequirePackage{amsfonts}						% Additional fonts and symbols
+\RequirePackage{amsxtra}						% Additional AMS features
+\RequirePackage{amsopn}							% Define custom operators
+\RequirePackage{amscd}							% Simple commutative diagrams
+\RequirePackage{amsbsy}							% Bold mathematical symbols
+\RequirePackage{bm}                     % Bold symbols in math environments
+\RequirePackage[scaled]{helvet}         % Helvetica font, scaled to match the size of the main font
+\RequirePackage{lipsum}                 % for dummy text
 
-\RequirePackage[
-free-standing-units, 
-space-before-unit, 
-number-unit-product = \,, 
-output-decimal-marker = {,},
-per-mode=fraction,
-separate-uncertainty = true,
-multi-part-units = repeat
-]{siunitx}
+%% SI units
+\ifdeutsch
+	\RequirePackage[
+	free-standing-units, 
+	space-before-unit, 
+	number-unit-product = \,, 
+	output-decimal-marker = {,},
+	per-mode=fraction,
+	separate-uncertainty = true,
+	multi-part-units = repeat
+	]{siunitx}
+\else
+	\RequirePackage[
+	free-standing-units, 
+	space-before-unit, 
+	number-unit-product = \,, 
+	output-decimal-marker = {.},
+	per-mode=fraction,
+	separate-uncertainty = true,
+	multi-part-units = repeat
+	]{siunitx}
+\fi
 \DeclareSIUnit{\point}{pt} % define point unit for font sizes
 
 %% Text settings
-\RequirePackage{ifxetex,ifluatex}
-\RequirePackage{fix-cm}
+\RequirePackage{ifxetex,ifluatex} % Engine detection (XeTeX/LuaLaTeX)
+\RequirePackage{fix-cm} % Fixes for Computer Modern fonts scaling
 \RequirePackage{setspace}
-\RequirePackage{enumitem}
-\RequirePackage{datetime2}
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage{upquote}
+\RequirePackage{enumitem} % Fine-grained list spacing and labels
+\RequirePackage{datetime2} % Modern date/time formatting
+\RequirePackage[T1]{fontenc} % T1 font encoding (better hyphenation)
+\RequirePackage[utf8]{inputenc} % UTF-8 input (pdfLaTeX)
+\RequirePackage{upquote} % Straight quotes in verbatim/tt fonts
 
-%\RequirePackage{microtype}
-\RequirePackage{xspace}
-\RequirePackage{blindtext}
-\RequirePackage[parfill]{parskip}
-\RequirePackage[unicode=true]{hyperref}
-\hypersetup{
-  pdfborder={0 0 0},
-  breaklinks=true
-}
-\RequirePackage{csquotes}
+%\RequirePackage{microtype} % Character protrusion and font expansion for nicer justification
+\RequirePackage{xspace} % Smart spacing after macros
+\RequirePackage{blindtext} % Dummy text for examples
+\RequirePackage[parfill]{parskip} % Space between paragraphs, no indent
+
+\RequirePackage{csquotes} % Language-aware quotation marks
 \ifdeutsch
     \RequirePackage[ngerman]{babel}
 \fi
@@ -231,10 +240,10 @@ multi-part-units = repeat
 \fi
 
 
-\RequirePackage{algorithm}
-\RequirePackage{algpseudocode}
+\RequirePackage{algorithm} % Floating algorithm environment
+\RequirePackage{algpseudocode} % Pseudocode layout (algorithmicx)
 
-\RequirePackage{xcolor}
+\RequirePackage{xcolor} % Color definitions and usage
 %--- Colorblind-friendly color palette (derived from Okabe–Ito scheme) ---
 
 
@@ -249,16 +258,36 @@ multi-part-units = repeat
 
 \RequirePackage[Tol, pgf]{colorblind} % Tol colorblind-friendly palette
 
+\RequirePackage[unicode=true]{hyperref} % Hyperlinks and PDF metadata
+\ifonline
+  % Online: show colored frames around hyperlinks
+  \hypersetup{
+    colorlinks=false,              % keep text black; use PDF frames
+    pdfborder={0 0 1},             % visible border (width=1)
+    urlbordercolor=oiVermilion,  % URLs (approx oiGrey)
+    linkbordercolor={1 1 1},       % hide frames for internal links
+    citebordercolor={1 1 1},       % hide frames for citations
+    runbordercolor={1 1 1},        % hide frames for file/run links
+    breaklinks=true
+  }
+\else
+  % Print/offline: no frames
+  \hypersetup{
+    pdfborder={0 0 0},
+    breaklinks=true
+  }
+\fi
 
 
-\RequirePackage[most]{tcolorbox}
+
+\RequirePackage[most]{tcolorbox} % Styled/colored boxes with breakable support
 \newtcolorbox{tbox}[2][1.0]{colback=lightgray, colframe=darkgray, fonttitle=\bfseries, adjusted title=#2, boxsep=1mm, left=1mm, right=1mm, width=#1\textwidth}
 
-\RequirePackage{xparse}          % for optional args
+\RequirePackage{xparse}          % LaTeX3 argument parsing (optional args)
 
 % Icons (Font Awesome 5)
 %   Requires TeX Live 2019+ (or equivalent). If you only have FA4, swap to \usepackage{fontawesome} and replace \faIcon{...}.
-\RequirePackage{fontawesome5}
+\RequirePackage{fontawesome5} % Icon fonts used in callout boxes
 
 %--- Shared base style for example boxes (layout & typography) ---
 \tcbset{
@@ -322,40 +351,40 @@ multi-part-units = repeat
 
 
 
-\urlstyle{same}  % don't use monospace font for urls
+\urlstyle{same}  % Keep URL font consistent with body text
 
-\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=15,minnames=3,natbib,autopunct,backref=false,doi=true,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex}
+\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=15,minnames=3,natbib,autopunct,backref=false,doi=true,isbn=false,url=true,backrefstyle=three+,defernumbers=true]{biblatex} % Bibliography management (biber backend, IEEE style)
 
 
-\RequirePackage[belowskip=12pt,aboveskip=4pt,figurename=\figurename,tablename=\tablename,labelfont=bf]{caption}
+\RequirePackage[belowskip=12pt,aboveskip=4pt,figurename=\figurename,tablename=\tablename,labelfont=bf]{caption} % Caption spacing and label styles
 
-\RequirePackage{subcaption}
-\RequirePackage[countmax]{subfloat}
+\RequirePackage{subcaption} % Sub-figures environment and captions
+\RequirePackage[countmax]{subfloat} % Alternative subfigure support
 
 
 %% Tikz
-\RequirePackage{pgfplots}
-\usetikzlibrary{shapes, arrows, positioning, fit, calc, patterns, decorations.pathmorphing,decorations.pathreplacing,decorations.shapes,decorations.text, math}
-\usepgfplotslibrary{groupplots}% Use this package to import Inkscape generated pdfs with pdf_tex files
-\pgfplotsset{compat=newest}
-\RequirePackage{import}
-\newlength\fheight % Plots aus Matlab immer gleich gross
-\newlength\fwidth % Plots aus Matlab immer gleich gross
-\RequirePackage[european,straightvoltages,straightlabels,american inductors]{circuitikz}
+\RequirePackage{pgfplots} % High-quality plots with TikZ/pgf
+\usetikzlibrary{shapes, arrows, positioning, fit, calc, patterns, decorations.pathmorphing,decorations.pathreplacing,decorations.shapes,decorations.text, math} % Common TikZ libraries used across figures
+\usepgfplotslibrary{groupplots}% Grouped plots; also handy with Inkscape pdf_tex imports
+\pgfplotsset{compat=newest} % Use the latest pgfplots API
+\RequirePackage{import} % Import subfiles while preserving paths
+\newlength\fheight % Keep MATLAB plots consistently sized
+\newlength\fwidth % Keep MATLAB plots consistently sized
+\RequirePackage[european,straightvoltages,straightlabels,american inductors]{circuitikz} % Electrical circuit schematics
 
 
 
 % % % % Table related features
 
 % Define new column types to allow centering and width of each cell
-\RequirePackage{array}
+\RequirePackage{array} % Extended array and tabular features
 %\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 %\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 %\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 % Tables 
-\RequirePackage{tabularx, etoolbox, booktabs}
-\RequirePackage{multirow} % Allows rowspan
+\RequirePackage{tabularx, etoolbox, booktabs} % Flexible tables and professional rules
+\RequirePackage{multirow} % Row spanning in tables
 %\newcommand{\rarray}[1]{\renewcommand{\arraystretch}{#1}} % Slightly enlarged cells
 
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -363,9 +392,9 @@ multi-part-units = repeat
 
 
 %% Head and foot
-\RequirePackage[includeheadfoot,top=0cm,headheight=16pt,margin=2.5cm]{geometry}
-\RequirePackage{titlesec}
-\RequirePackage{fancyhdr}
+\RequirePackage[includeheadfoot,top=0cm,headheight=16pt,margin=2.5cm]{geometry} % Page geometry and margins
+\RequirePackage{titlesec} % Sectioning title formatting
+\RequirePackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{#1}{}}
@@ -404,7 +433,7 @@ multi-part-units = repeat
 \clubpenalty=10000
 \widowpenalty=10000
 
-\setlength\footnotesep{7.7\p@}
+\setlength\footnotesep{7.7\p@} % Space between footnotes
 
 \newdimen\betweenumberspace          % dimension for space between
 \betweenumberspace=5\p@               % number and text of titles
@@ -508,7 +537,7 @@ multi-part-units = repeat
 \renewcommand{\pagedeclaration}[1]{, S.~#1)}
 \fi
 \makenomenclature
-%%%%%%%%%%% Nomencl als Section umdefiniert
+%%%%%%%%%%% Redefine nomenclature as a section
 %\makeatletter
 \def\thenomenclature{%
   \section*{\nomname}
@@ -590,7 +619,7 @@ multi-part-units = repeat
 
 
 %  special signs and characters
-\RequirePackage{upgreek}
+\RequirePackage{upgreek} % Upright Greek letters in math
 \newcommand{\D}{\mathrm{d}}
 \newcommand{\E}{\mathrm{e}}
 \let\eul=\E
