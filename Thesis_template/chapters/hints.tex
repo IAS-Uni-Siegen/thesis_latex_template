@@ -1,4 +1,4 @@
-\chapter{Examples of useful LaTeX features and writing hints} 
+\chapter{Examples of useful LaTeX features and writing instructions} 
 \label{cha:hints}
 
 \section{Citations}
@@ -48,6 +48,7 @@ In \tabref{tab:params} some arbitrary dummy parameters are summarized for demons
 	 \end{tabular}
 \end{table}
 
+
  It is considered good style to use only horizontal lines for the top, bottom and between table body sections while avoiding vertical lines. This is because vertical lines are considered to be less readable and less aesthetic. The table is also centered and has a caption. The caption is placed above the table (while figures' captions are typically placed below the figure, compare \figref{fig:MPC}). This is a common style convention in scientific writing. 
 
 
@@ -60,10 +61,13 @@ This is an in-text equation example: $T(t)=3/2\psi_{\mathrm{PM}}i_{\mathrm{q}}(t
 	\frac{\mathrm{d}}{\mathrm{d}t}x(t) = f(x(t),u(t),t),
 \end{equation}
 where $x(t)\in\mathbb{R}$ is the state, $u(t)\in\mathbb{R}$ is the input, $f(\cdot)\in\mathbb{R}\rightarrow\mathbb{R}$ represents the state dynamics and $t\in\left[0,T\right]$ is the time. In this scalar equation, all variables are represented in regular font. If any variable or parameter of an equation is of vectorial / matrix / multidimensional nature (e.g., $\bm{x}(t)\in\mathbb{R}^n$), it should be represented in bold font. For example,
+
 \begin{equation*}
 	\bm{x}(t) = \bm{A}\bm{x}(t) + \bm{b}u(t)
 \end{equation*}
 represents a linear time-invariant state-space example of  \eqref{eq:example}, where $\bm{A}\in\mathbb{R}^{n\times n}$ is the state matrix, $\bm{b}\in\mathbb{R}^{n}$ is the input vector and $u(t)\in\mathbb{R}$ is the input vector (which is the only non-bold symbol in the above equation due to its scalar nature). Note also that the last example equation is not numbered which is achieved by using the \verb|\begin{equation*}|...\verb|\end{equation*}| environment. Discontinuing the numbering of an equation can be useful when the equation is not referred to in the text and if it is of minor importance.
+
+
 
 
 \begin{infobox}[][Referring to equations]
@@ -149,6 +153,14 @@ V = \frac{4}{3}\pi r^3
 \end{equation}
 \end{errorbox}
 
+\subsection{Nomenclature}
+\label{subsec:nomenclature}
+A nomenclature is a list of symbols and their definitions used in the document. It helps readers understand the meaning of symbols and notation used throughout the text. We utilize the \href{https://ctan.org/pkg/glossaries}{glossaries} package to automatically create a nomenclature -- separated into a general notation section and a list of symbols. The nomenclature is printed in the back matter of the document.  
+
+\begin{infobox}[][Adding notation and symbol entries]
+Inside the file \texttt{notation.tex} all notation entries of the manuscript are gathered and the command \verb|\newglossaryentry{...}{type={notation}, ...}| adds new ones. The notation describes the general mathematical typesetting rules and conventions used in the document. Complementary, within \texttt{symbols.tex} the command \verb|\newglossaryentry{...}{type={symbols}, ...}| is used to add symbol entries. 
+\end{infobox}
+
 
 
  \section{Units}
@@ -206,7 +218,7 @@ As an alternative to circuitikz, there is a curated Inkscape template for many e
 \begin{figure}[htb]
 	\centering
     \includegraphics[]{fig/inkscape/Inkscape_Symbols_All.pdf}
-	\caption{Overview of symbols provided by the \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{Inkscape electrical symbols library}.}
+	\caption{Overview of symbols provided from the \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{Inkscape electrical symbols library}.}
 	\label{fig:inkscape_library}
 \end{figure}
 
@@ -238,7 +250,7 @@ When creating figures, it is important to use color schemes that are accessible 
 
 \section{Acronyms and glossaries}
 \label{sec:acronyms}
-This is an example of an acronym entry: \gls{chp}. The first time an acronym is used, it is spelled out in full and the acronym is placed in brackets. The acronym is then automatically added to the list of acronyms at the end of the document. The list of acronyms is created using the \href{https://ctan.org/pkg/glossaries}{glossaries} package. The \texttt{glossaries.tex} file is used to define the acronyms. Starting the second time an acronym is used, only the short acronym form is used, such as \gls{chp}. 
+This is an example of an acronym entry: \gls{mlp}. The first time an acronym is used, it is spelled out in full and the acronym is placed in brackets. The acronym is then automatically added to the list of acronyms at the end of the document. The list of acronyms is created using the \href{https://ctan.org/pkg/glossaries}{glossaries} package. The \texttt{glossaries.tex} file is used to define the acronyms. Starting the second time an acronym is used, only the short acronym form is used, such as \gls{mlp}. 
 
 This is an example of a glossary entry: \gls{CHPg}. The glossary is different from the acronyms as it lists terms together with a short definition for those terms (with the glossary list at the end of the document). A glossary is sometimes used in larger books or theses to explain terms that are not commonly known, but for most scientific theses or papers it is rather uncommon to use a glossary. Further details on the usage of the \href{https://ctan.org/pkg/glossaries}{glossaries} package can be found in its documentation.
 

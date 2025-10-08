@@ -68,6 +68,8 @@
  \def\filingdatename{Filing Date}%
 \def\forewordname{Foreword}%
 \def\glossaryname{Glossary}%
+\def\notationname{Notation}%
+\def\symbolname{Symbols}%
 \def\keywordname{{\bf Key words:}}%
 \def\indexname{Index}%
 \def\lemmaname{Lemma}%
@@ -127,6 +129,8 @@
  \def\filingdatename{Einreichdatum}%
  \def\forewordname{Geleitwort}%
  \def\glossaryname{Glossar}%
+\def\notationname{Notation}%
+\def\symbolname{Liste der Symbole}%
  \def\keywordname{{\bf Schl\"usselw\"orter:}}%
  \def\indexname{Sachverzeichnis}%
 \def\lemmaname{Lemma}%
@@ -521,35 +525,13 @@
 
 %% Indices
 \makeindex
-\RequirePackage[acronym,shortcuts,nopostdot,nogroupskip,section,nonumberlist]{glossaries}
+\RequirePackage[acronym, symbols, shortcuts,nopostdot,nogroupskip,section,nonumberlist]{glossaries-extra}
 \renewcommand*{\glsgroupskip}{}
+% Define an indexed glossary for notation (requires makeglossaries)
+% File extensions: .not (input), .ntn (output), .ntg (log)
+\newglossary[ntg]{notation}{not}{ntn}{Notation}
 \makeglossaries
 
-\ifenglish
-\RequirePackage[english,notintoc,refeq,norefpage]{nomencl}
-\renewcommand\nomname{Nomenclature}
-\fi
-\ifdeutsch
-\RequirePackage[german,notintoc,refeq,norefpage]{nomencl}
-\renewcommand\nomname{Formelzeichen}
-\renewcommand{\nomlabelwidth}{6em}
-\renewcommand{\eqdeclaration}[1]{ (Gl.~#1)}
-\renewcommand{\pagedeclaration}[1]{, S.~#1)}
-\fi
-\makenomenclature
-%%%%%%%%%%% Redefine nomenclature as a section
-%\makeatletter
-\def\thenomenclature{%
-  \section*{\nomname}
-  \if@intoc\addcontentsline{toc}{section}{\nomname}\fi%
-\nompreamble
-\list{}{%
-\labelwidth\nom@tempdim
-\leftmargin\labelwidth
-\advance\leftmargin\labelsep
-\itemsep\nomitemsep
-\let\makelabel\nomlabel}}
-%\makeatother
 
 %%%%%%%%%%%%%%%%
 \renewcommand\listoffigures{%
@@ -574,13 +556,14 @@
 \chapter{\listsname}
 \phantomsection\addcontentsline{toc}{section}{\listtablename}\listoftables
 \phantomsection\addcontentsline{toc}{section}{\listfigurename}\listoffigures
-\phantomsection\addcontentsline{toc}{section}{\acrname}\printglossary[type=\acronymtype,title=\acrname]
-\phantomsection\addcontentsline{toc}{section}{\glossaryname}\printglossary[title=\glossaryname]
-\phantomsection\addcontentsline{toc}{section}{\nomname}\printnomenclature
+\printglossary[type=\acronymtype,title=\acrname]
+\printglossary[title=\glossaryname]
+\printglossary[type=notation, title=\notationname]
+\printglossary[type=symbols]
 \printbibliography[heading=subbibintoc,title=\refname]
 }{\clearpage}
 %
-%
+
 
 
 % abstract environment
@@ -630,6 +613,7 @@
 \DeclareMathOperator{\argmax}{argmax}
 \DeclareMathOperator{\argmin}{argmin}
 \DeclareMathOperator{\variance}{var}
+\DeclareMathOperator{\T}{^{\mkern-1.5mu\mathsf{T}}} %Transpose
 \newcommand{\const}{\mathrm{const}\@ifnextchar.{}{.}}
 
  \def\vec#1{\ensuremath{\mathchoice
