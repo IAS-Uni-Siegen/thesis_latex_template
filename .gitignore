@@ -10,7 +10,7 @@
 *.lot
 *.nlo
 *.out
-*.pdf
+Thesis_template/main.pdf
 *.run.xml
 *.synctex.gz
 *.toc
