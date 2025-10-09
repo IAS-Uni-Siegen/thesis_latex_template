@@ -263,24 +263,11 @@
 \RequirePackage[Tol, pgf]{colorblind} % Tol colorblind-friendly palette
 
 \RequirePackage[unicode=true]{hyperref} % Hyperlinks and PDF metadata
-\ifonline
-  % Online: show colored frames around hyperlinks
-  \hypersetup{
-    colorlinks=false,              % keep text black; use PDF frames
-    pdfborder={0 0 1},             % visible border (width=1)
-    urlbordercolor=oiVermilion,  % URLs (approx oiGrey)
-    linkbordercolor={1 1 1},       % hide frames for internal links
-    citebordercolor={1 1 1},       % hide frames for citations
-    runbordercolor={1 1 1},        % hide frames for file/run links
-    breaklinks=true
-  }
-\else
-  % Print/offline: no frames
-  \hypersetup{
+\hypersetup{
     pdfborder={0 0 0},
     breaklinks=true
-  }
-\fi
+} % No frames around links by default
+
 
 
 
