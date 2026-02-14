@@ -10,7 +10,7 @@
 *.lot
 *.nlo
 *.out
-Thesis_template/main.pdf
+main.pdf
 *.run.xml
 *.synctex.gz
 *.toc
@@ -44,5 +44,4 @@ Thesis_template/main.pdf
 *.ntn
 
 .ruff_cache/
-
 

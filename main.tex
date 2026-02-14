@@ -38,25 +38,25 @@
 
 \begin{document}
 
-\maketitle              
+\maketitle
 
 \frontmatter
-    \input{chapters/declaration}
-    \input{chapters/abstract}
-    
-    \tableofcontents
-    
+\input{chapters/declaration}
+\input{chapters/abstract}
+
+\tableofcontents
+
 \mainmatter
 
-    \input{chapters/introduction.tex}
-    \input{chapters/hints.tex}
-    \input{chapters/software.tex}
-    \input{chapters/conclusion.tex}
+\input{chapters/introduction.tex}
+\input{chapters/hints.tex}
+\input{chapters/software.tex}
+\input{chapters/conclusion.tex}
 
 \backmatter
-    
-    \input{chapters/appendix.tex}
-    \lists
 
-    \ifdiss\iffinal\input{chapters/CV}\fi\fi % CV only for ph.d. dissertation and final version (otherwise will not be printed). Is always structured in German, as the CV is only needed for the formal ph.d. evaluation process at our faculty.
+\input{chapters/appendix.tex}
+\lists
+
+\ifdiss\iffinal\input{chapters/CV}\fi\fi % CV only for ph.d. dissertation and final version (otherwise will not be printed). Is always structured in German, as the CV is only needed for the formal ph.d. evaluation process at our faculty.
 \end{document}

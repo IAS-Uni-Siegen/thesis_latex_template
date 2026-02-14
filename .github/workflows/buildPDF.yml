@@ -115,7 +115,7 @@ jobs:
       - name: Set up TeX Live
         uses: xu-cheng/latex-action@v3
         with:
-          working_directory: Thesis_template
+          working_directory: ./
           root_file: main.tex
           latexmk_use_lualatex: false
           latexmk_shell_escape: true
@@ -124,7 +124,7 @@ jobs:
       - name: Move PDF to publish folder
         run: |
           mkdir -p built
-          mv Thesis_template/main.pdf built/thesis.pdf
+          mv ./main.pdf built/thesis.pdf
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -133,7 +133,7 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{ github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
+    if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
