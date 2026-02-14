@@ -43,4 +43,6 @@ Thesis_template/main.pdf
 *.nto
 *.ntn
 
+.ruff_cache/
+
 
