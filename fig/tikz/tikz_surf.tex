@@ -1,0 +1,13 @@
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+				colormap name=T-D-S
+			]
+			\addplot3[
+				surf,
+				domain=0:360,
+				samples=40,
+			] {sin(x)*sin(y)};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}

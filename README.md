@@ -22,7 +22,14 @@ Run 'main.tex' using an LaTeX editor, e.g., TeXstudio or VScode with LaTeX exten
 Do not modify the `.cls` file. Add own LaTeX packages into the `chapters/header.tex`-file.
 
 ## Improvements and bugs
-Please open an issue or pull request to suggest changes. Critical feedback and improvement hints are always welcome and highly appreciated!
+- We recommend using [VSCode](https://code.visualstudio.com/) as code editor.
+- [Ruff](https://github.com/astral-sh/ruff) should be installed.
+
+    ```bash
+    pip install ruff
+    ```
+- It is expected that [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) and [Ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff) extensions are installed so that formatting of the code is achieved automatically.
+- Please open an issue or pull request to suggest changes. Critical feedback and improvement hints are always welcome and highly appreciated!
 
 ## Preview and writing advice (click on picture for PDF)
 [![Preview of first page](first_page.png)](https://ias-uni-siegen.github.io/thesis_latex_template/thesis.pdf)
