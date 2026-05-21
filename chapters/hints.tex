@@ -152,9 +152,19 @@ A nomenclature is a list of symbols and their definitions used in the document. 
 
 \section{Units}
 \label{sec:units}
-In engineering, it is important to use the correct units. For example, the speed of light is $c = \SI{299792458}{\meter\per\second}$. The unit of the speed of light is $\si{\meter\per\second}$.
+In engineering, it is important to use the correct units.
+
+\begin{infobox}[][Physical quantity components]
+	According to ISO 80000-1, any value of a physical quantity $X$ ix expressed the the product of a numerical value $\{X\}$ and a unit of measurement $[X]$ as follows: $X = \{X\} [X]$. For example, the speed of light can be expressed as $c = \{c\} [c] = \SI[per-mode=fraction, fraction-command=\nicefrac]{299792458}{\meter\per\second}$.
+\end{infobox}
 
 This is called a quantity equation (also called complete equation), where the unit of measurement and the physical unit are explicitly separated to represent a physical quantity. When using a quantity equation, ensure sticking to the International System of Units (SI units). This requires to display SI units in upright letters and in roman font. The numerical number is separated from the SI unit by a space. The easiest way to achieve this is by using the \href{https://ctan.org/pkg/siunitx}{siunitx} package.
+
+\begin{errorbox}[][Incorrect SI unit representation examples]
+	Italic unit font: $v = 5\,\mathit{m/s}$ \\
+	Missing gap between number and unit: $v = 5\mathrm{m/s}$\\
+	Apply unit operator to a unit (and not to a quantity): $[\mathrm{m/s}]$
+\end{errorbox}
 
 \section{Figures}
 \label{sec:architecture}
@@ -180,6 +190,10 @@ The package \href{https://ctan.org/pkg/pgf}{pgf} provides a powerful tool to cre
 	\caption{Example of a tikz figure (time series plot).}
 	\label{fig:tikz_example_01}
 \end{figure}
+\begin{errorbox}[][Unit operator as part of a figure label]
+	Unfortunately, many literature sources incorrectly apply the unit operator to a unit within figure labels, such as \enquote{$i\, [\mathrm{A}]$}. This is incorrect because the unit operator should only be applied to physical quantities and not to units. Correct ways of labeling would be \enquote{$i\,\text{in}\,\mathrm{A}$} or \enquote{$i$ / $\mathrm{A}$}, compare \figref{fig:tikz_example_01}.
+\end{errorbox}
+
 \begin{figure}[ht]
 	\centering
 	\input{fig/tikz/tikz_surf}

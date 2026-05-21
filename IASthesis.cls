@@ -95,7 +95,7 @@
 	\def\theoremname{Theorem}%
 	\def\titledepartment{Chair of Interconnected Automation Systems}%
 	\def\titleinstitute{Department of Electrical Engineering and Computer Science}%
-	\def\titleuniversity{Siegen University}
+	\def\titleuniversity{University of Siegen}
 \fi
 %
 % German section
@@ -190,6 +190,7 @@
 \RequirePackage{bm}                     % Bold symbols in math environments
 \RequirePackage[scaled]{helvet}         % Helvetica font, scaled to match the size of the main font
 \RequirePackage{lipsum}                 % for dummy text
+\RequirePackage{nicefrac}               % Better fractions in math mode
 
 %% SI units
 \ifdeutsch
@@ -654,86 +655,86 @@
 
 %%% Title Page
 \def\maketitle{
-\ifdiss{
-	%Title Page Master
-	\newpage
-	\pagestyle{empty}
-	\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
-	\null
-	\begingroup
-	\def\and{\unskip, }
-	\parindent=\z@
-	\pretolerance=10000
-	\rightskip=\z@ \@plus 3cm
-	%%%%%%%%%%
-	\begin{center}
-		\includegraphics[height=3.0cm]{Logos/Logo_Kombi_IAS_Blau}
-		%\linespread{1.0}
-		\sffamily
-		\vfill
-		{\Huge \begin{spacing}{1.1}\textbf{\\[13mm] \@title \\[15mm]}\end{spacing}}
-		\vfill
-		\Large{Der Naturwissenschaftlich-Technischen Fakultät}\\
-		\Large{der Universität Siegen}\\[5mm]
-		\large{zur Erlangung des akademischen Grades\\[5mm]
-			\Large{Doktor der Ingenieurwissenschaften (Dr.-Ing.)}}\\[5mm]
-		\iffinal genehmigte\ \else vorgelegte\ \fi Dissertation \\
-		von \\[5mm]
-		\Large{\@author} \\[5mm]
-		\iffinal{
-			\begin{tabular}[ht]{ll}
-				\Large{Erster Gutachter:}               & \Large{\@supervisora} \\
-				\Large{Zweiter Gutachter:}              & \Large{\@supervisorb} \\[5mm]
-				\Large{Tag der mündlichen Prüfung:\ \ } & \Large{\@examdate}
-			\end{tabular}\\[12mm]
+	\ifdiss{
+		%Title Page Master
+		\newpage
+		\pagestyle{empty}
+		\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
+		\null
+		\begingroup
+		\def\and{\unskip, }
+		\parindent=\z@
+		\pretolerance=10000
+		\rightskip=\z@ \@plus 3cm
+		%%%%%%%%%%
+		\begin{center}
+			\includegraphics[height=3.0cm]{Logos/Logo_Kombi_IAS_Blau}
+			%\linespread{1.0}
+			\sffamily
+			\vfill
+			{\Huge \begin{spacing}{1.1}\textbf{\\[13mm] \@title \\[15mm]}\end{spacing}}
+			\vfill
+			\Large{Der Naturwissenschaftlich-Technischen Fakultät}\\
+			\Large{der Universität Siegen}\\[5mm]
+			\large{zur Erlangung des akademischen Grades\\[5mm]
+				\Large{Doktor der Ingenieurwissenschaften (Dr.-Ing.)}}\\[5mm]
+			\iffinal genehmigte\ \else vorgelegte\ \fi Dissertation \\
+			von \\[5mm]
+			\Large{\@author} \\[5mm]
+			\iffinal{
+				\begin{tabular}[ht]{ll}
+					\Large{Erster Gutachter:}               & \Large{\@supervisora} \\
+					\Large{Zweiter Gutachter:}              & \Large{\@supervisorb} \\[5mm]
+					\Large{Tag der mündlichen Prüfung:\ \ } & \Large{\@examdate}
+				\end{tabular}\\[12mm]
 
-			\Large{Siegen \@publicationyear} \\[6mm]
-			\Large{Diss. \@thesisnr}
-		}\else{
-			\Large{geboren am \@birthdate\ in \@birthplace}
-		}\fi
-		\vfill
-	\end{center}
-	\endgroup
-	\restoregeometry
-	\newpage
-}\else{
-%Title Page Master
-\newpage
-\pagestyle{empty}
-\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
-\null
-\begingroup
-\def\and{\unskip, }
-\parindent=\z@
-\pretolerance=10000
-\rightskip=\z@ \@plus 3cm
-\begin{center}
-	\includegraphics[height=3cm]{Logos/Logo_Kombi_IAS_Blau.pdf}
-	\\[5ex]
-	\textbf{\titleinstitute\\[.2ex]
-		\titleuniversity\\[.2ex]
-		\titledepartment\\[.2ex]
-		\@supervisora}
-	\vfill
-	{\LARGE \textbf{\@thesistype} }\vskip3ex
-	{\Huge \begin{spacing}{1.1} \textbf{\@title}\end{spacing}}
-	\vfill
-	{\Large \by}
-	\vfill
-	{\Large  \@author }\vskip1ex
-	\ifenglish{\Large Student ID: \@matrnr }\fi
-	\ifdeutsch{\Large Matr.-Nr.: \@matrnr }\fi
-	\\[3cm]
-	\vfill
-\end{center}
-{\large \supervisor: \@supervisorb }\vskip.1ex
-{\large \thesisnrname: \@thesisnr }\vskip.1ex
-{\large \filingdatename: \@filingdate }
-\endgroup
-\restoregeometry
-\newpage
-}\fi
+				\Large{Siegen \@publicationyear} \\[6mm]
+				\Large{Diss. \@thesisnr}
+			}\else{
+				\Large{geboren am \@birthdate\ in \@birthplace}
+			}\fi
+			\vfill
+		\end{center}
+		\endgroup
+		\restoregeometry
+		\newpage
+	}\else{
+		%Title Page Master
+		\newpage
+		\pagestyle{empty}
+		\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
+		\null
+		\begingroup
+		\def\and{\unskip, }
+		\parindent=\z@
+		\pretolerance=10000
+		\rightskip=\z@ \@plus 3cm
+		\begin{center}
+			\includegraphics[height=3cm]{Logos/Logo_Kombi_IAS_Blau.pdf}
+			\\[5ex]
+			\textbf{\titleinstitute\\[.2ex]
+				\titleuniversity\\[.2ex]
+				\titledepartment\\[.2ex]
+				\@supervisora}
+			\vfill
+			{\LARGE \textbf{\@thesistype} }\vskip3ex
+			{\Huge \begin{spacing}{1.1} \textbf{\@title}\end{spacing}}
+			\vfill
+			{\Large \by}
+			\vfill
+			{\Large  \@author }\vskip1ex
+			\ifenglish{\Large Student ID: \@matrnr }\fi
+			\ifdeutsch{\Large Matr.-Nr.: \@matrnr }\fi
+			\\[3cm]
+			\vfill
+		\end{center}
+		{\large \supervisor: \@supervisorb }\vskip.1ex
+			{\large \thesisnrname: \@thesisnr }\vskip.1ex
+			{\large \filingdatename: \@filingdate }
+		\endgroup
+		\restoregeometry
+		\newpage
+	}\fi
 }
 
 \endinput
