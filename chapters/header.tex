@@ -1,2 +1,32 @@
-%% additional definitions here
+%% Packages used by the bundled example chapters.
+\usepackage{nicefrac} % Compact fractions in the siunitx example.
+\usepackage{booktabs} % Publication-quality horizontal rules in tables.
+\usepackage{pgfplots} % Data plots and the three-dimensional surface example.
+\pgfplotsset{compat=1.18}
+\usepackage[Tol,pgf,keep-defaults]{colorblind} % Paul Tol plot colours without replacing standard colours.
+\usepackage[
+	european,
+	straightvoltages,
+	straightlabels,
+	american inductors
+]{circuitikz} % Electrical circuit example.
 
+%% Optional packages; uncomment only when the corresponding feature is needed.
+% \usepackage{rotating} % Sideways figures and tables on dedicated pages.
+% \usepackage[section]{placeins} % Keep floats within their source sections.
+% \usepackage{subcaption} % Subfigures; requires class-level integration before cleveref.
+% \usepackage{import} % TeX imports with paths relative to the imported file.
+% \usepackage{array} % Additional column definitions for advanced tables.
+% \usepackage{tabularx} % Tables with columns that fill a target width.
+% \usepackage{multirow} % Table cells spanning several rows.
+% Extra TikZ shapes and drawing helpers:
+% \usetikzlibrary{shapes,arrows,positioning,fit,calc,patterns}
+% TikZ decorations and calculations:
+% \usetikzlibrary{decorations.pathmorphing,decorations.pathreplacing}
+% \usetikzlibrary{decorations.shapes,decorations.text,math}
+% \usepgfplotslibrary{groupplots} % Aligned grids containing several plots.
+% Dimensions used by some imported MATLAB/PGFPlots files:
+% \newlength\fheight
+% \newlength\fwidth
+
+%% Add thesis-specific packages and commands below this line.

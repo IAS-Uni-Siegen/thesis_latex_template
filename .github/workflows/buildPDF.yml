@@ -1,26 +1,60 @@
 name: Build LaTeX PDF
 
-on: 
+on:
   pull_request:
     branches:
       - main
     paths:
-      - '**.tex'
-      - '**.sty'
-      - '**.cls'
-      - '**.py'
-      - '**.ipynb'
-      - '**.yml'
+      - '**/*.tex'
+      - '**/*.bib'
+      - '**/*.sty'
+      - '**/*.cls'
+      - '**/*.bst'
+      - '**/*.bbx'
+      - '**/*.cbx'
+      - '**/*.lbx'
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.pdf'
+      - '**/*.svg'
+      - '**/*.csv'
+      - '**/*.dat'
+      - '**/*.otf'
+      - '**/*.ttf'
+      - '**/*.py'
+      - '**/*.ipynb'
+      - '.latexmkrc'
+      - '.latexindent.yml'
+      - 'pyproject.toml'
+      - '.github/workflows/buildPDF.yml'
   push:
     branches:
       - main
     paths:
-      - '**.tex'
-      - '**.sty'
-      - '**.cls'
-      - '**.py'
-      - '**.ipynb'
-      - '**.yml'
+      - '**/*.tex'
+      - '**/*.bib'
+      - '**/*.sty'
+      - '**/*.cls'
+      - '**/*.bst'
+      - '**/*.bbx'
+      - '**/*.cbx'
+      - '**/*.lbx'
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.pdf'
+      - '**/*.svg'
+      - '**/*.csv'
+      - '**/*.dat'
+      - '**/*.otf'
+      - '**/*.ttf'
+      - '**/*.py'
+      - '**/*.ipynb'
+      - '.latexmkrc'
+      - '.latexindent.yml'
+      - 'pyproject.toml'
+      - '.github/workflows/buildPDF.yml'
   workflow_dispatch:
 
 permissions:
@@ -76,7 +110,7 @@ jobs:
         run: |
           set -e
 
-          echo "Checking .py files formatting..."
+          echo "Checking formatting of .py files..."
           PY_FAILED=0
           for file in $(find . -name "*.py" -not -path "*/.*"); do
             if ! ruff format --check --config ./pyproject.toml "$file"; then
@@ -85,7 +119,7 @@ jobs:
             fi
           done
 
-          echo "Checking .ipynb files formatting..."
+          echo "Checking formatting of .ipynb files..."
           NB_FAILED=0
           for file in $(find . -name "*.ipynb" -not -path "*/.*"); do
             if ! ruff format --check --config ./pyproject.toml "$file"; then
@@ -97,7 +131,7 @@ jobs:
           done
 
           if [ $PY_FAILED -ne 0 ] || [ $NB_FAILED -ne 0 ]; then
-            echo "Formatting check failed. You can check by running 'ruff format .' locally."
+            echo "Formatting check failed. You can fix it by running 'ruff format .' locally."
             exit 1
           fi
           
@@ -110,14 +144,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up TeX Live
-        uses: xu-cheng/latex-action@v3
+      - name: Build with LuaLaTeX through the project latexmkrc
+        uses: xu-cheng/latex-action@v4
         with:
-          working_directory: ./
           root_file: main.tex
-          latexmk_use_lualatex: false
-          latexmk_shell_escape: true
-          extra_system_packages: biber ghostscript
+          texlive_version: 2025
+          compiler: latexmk
+          args: -norc -r .latexmkrc
+
+      - name: Verify the engine and PDF output
+        run: |
+          grep -q "This is LuaHBTeX" main.log
+          test -s main.pdf
 
       - name: Move PDF to publish folder
         run: |
@@ -128,6 +166,12 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: built
+
+      - name: Upload downloadable PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-pdf
+          path: built/thesis.pdf
 
   deploy:
     needs: build

@@ -1,4 +1,4 @@
-# Auto detect text files and normalize to LF on checkin
+# Auto-detect text files and normalize to LF on check-in
 * text=auto eol=lf
 
 # LaTeX files should always use LF line endings
@@ -7,7 +7,7 @@
 *.cls text eol=lf
 *.bib text eol=lf
 
-# Python files should always use LF line endings  
+# Python files should always use LF line endings
 *.py text eol=lf
 *.ipynb text eol=lf
 

@@ -6,11 +6,12 @@
 *.glo
 *.idx
 *.lof
+*.loa
 *.log
 *.lot
 *.nlo
 *.out
-main.pdf
+/main.pdf
 *.run.xml
 *.synctex.gz
 *.toc
@@ -25,7 +26,7 @@ main.pdf
 *.gls
 *.ilg
 *.ind
-*.ist
+/main.ist
 *.nlg
 *.nls
 
@@ -44,4 +45,3 @@ main.pdf
 *.ntn
 
 .ruff_cache/
-

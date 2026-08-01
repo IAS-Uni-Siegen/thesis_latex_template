@@ -1,4 +1,26 @@
 {
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-lualatex-project",
+            "command": "latexmk",
+            "args": [
+                "-norc",
+                "-r",
+                "%WORKSPACE_FOLDER%/.latexmkrc",
+                "%DOC%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "LuaLaTeX (project latexmkrc)",
+            "tools": [
+                "latexmk-lualatex-project"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.option.maxPrintLine.enabled": false,
     "latex-workshop.formatting.latexindent.path": "latexindent",
     "latex-workshop.formatting.latexindent.args": [
         "-m",

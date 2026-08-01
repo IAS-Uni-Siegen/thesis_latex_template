@@ -1,29 +1,32 @@
 \chapter{Examples of useful LaTeX features and writing instructions}
+\chaptershorttitle{LaTeX and writing instructions}
 \label{cha:hints}
 
 \section{Citations}
 \label{sec:citations}
-This is an example citation \cite{WaBo2016}. This is another example citation \cite{wallscheid2014real}. You can also combine them as \cite{WaBo2016,wallscheid2014real}. This is done via the \verb|\cite{}| command. This command is used to reference a source in the text. The source is then automatically listed in the bibliography at the end of the document. The bibliography is created using the \href{https://ctan.org/pkg/biblatex}{biblatex} package. We generally follow the IEEE citation style, as already configured within this template. The \texttt{references.bib} file is a BibTeX file. BibTeX is a reference management software for formatting lists of references. It is widely used in academia for this purpose, and it is also used in the \LaTeX\ document preparation system.
+This is an example citation \cite{WaBo2016}. This is another example citation \cite{wallscheid2014real}. You can also combine them as \cite{WaBo2016,wallscheid2014real}. This is done via the \verb|\cite{}| command. This command is used to reference a source in the text. The source is then automatically listed in the bibliography at the end of the document. The bibliography is managed using the \href{https://ctan.org/pkg/biblatex}{biblatex} package and processed with Biber. We generally follow the IEEE citation style, as already configured within this template. The \texttt{references.bib} file stores the bibliography data in the BibTeX data format.
 
-Some general hints on citations:
+Some general guidance on citations:
 \begin{itemize}
-	\item Use quotation marks only for direct quotes from a primary source (e.g., using the \href{https://ctan.org/pkg/csquotes}{csquotes} package). If you refer to a general statement, idea or, observation of a source, do not use quotation marks but rather paraphrase the content and add a citation at the end of the sentence.
-	\item Also add citation marks to figures, tables, etc. if they are not your own work or if you have adapted them from another source. This also applies to AI-generated content.
-	\item Always ensure that the citation is correct and that the source is reliable, that is, stick to peer-reviewed scientific journals, conference proceedings, books, etc. and avoid using non-reviewed sources such as blogs or general websites.
+	\item Use quotation marks for direct quotes (e.g., using the \href{https://ctan.org/pkg/csquotes}{csquotes} package). If you refer to a general statement, idea, or observation from a source, do not use quotation marks; instead, paraphrase the content and add a citation at the end of the sentence.
+	\item Also add citations to figures, tables, etc. if they are not your own work or if you have adapted them from another source. This also applies to AI-generated content.
+	\item Always ensure that citations are correct and that sources are reliable. Prefer peer-reviewed scientific journals, conference proceedings, books, and other authoritative sources over unreviewed blogs or general websites.
 \end{itemize}
-\begin{infobox}[][Plagiarism]
+
+Datasets and software are research outputs and should be cited when they materially support the work. Prefer a persistent identifier, cite the exact dataset or archived software release, and record the software version and release date where available; compare the dataset and software examples in \cite{Fisher1936Iris,Collins2026Latexmk}.
+\begin{infobox}[title={Plagiarism}]
 	Plagiarism is the act of using someone else's work or ideas without proper attribution, presenting them as your own. This can include copying text, images, data, or any other form of intellectual property without giving credit to the original source. Plagiarism is considered a serious academic and ethical offense and can lead to severe consequences, including academic penalties and legal action.\\
 	\\
-	To avoid plagiarism, always cite your sources properly and give credit to the original authors for their work. Also, self-plagiarism, that is, reusing your own previously published work without proper citation, must be avoided as well.
+	To avoid plagiarism, always cite your sources properly and give credit to the original authors for their work. Self-plagiarism, that is, reusing your own previously published work without proper citation, must also be avoided.
 \end{infobox}
 
-\section{Upper and lower case formatting}
+\section{Upper- and lowercase formatting}
 \label{sec:formatting}
-In titles and captions, capitalize only the beginning of the sentence. In the main text, capitalize the first letter of the first word of a sentence. Hence, stick to lower case formatting as the default representation. In contrast, proper nouns need to be capitalized whenever used (e.g, \enquote{Maxwell's equations} or \enquote{Kalman filter}). Note that technical terms are not necessarily proper nouns and should not be capitalized (e.g., \enquote{state-space model} or \enquote{convolutional neural network}). Also, when introducing abbreviations, you should not capitalize the full term, e.g., \enquote{recurrent neural network (RNN)}.
+In titles and captions, capitalize only the beginning of the sentence. In the main text, capitalize the first letter of the first word of a sentence. Hence, use lowercase formatting as the default representation. In contrast, proper nouns need to be capitalized whenever used (e.g., \enquote{Maxwell's equations} or \enquote{Kalman filter}). Note that technical terms are not necessarily proper nouns and should not be capitalized (e.g., \enquote{state-space model} or \enquote{convolutional neural network}). Also, when introducing abbreviations, you should not capitalize the full term, e.g., \enquote{recurrent neural network (RNN)}.
 
 \section{Tables}
 \label{sec:features}
-In \tabref{tab:params} some arbitrary dummy parameters are summarized for demonstration purpose. The table is created using the \href{https://ctan.org/pkg/booktabs}{booktabs} package. With the command \verb|\tabref{...}| one can refer to a labeled table as shown before.
+In \cref{tab:params} some arbitrary dummy parameters are summarized for demonstration purposes. The table is created using the \href{https://ctan.org/pkg/booktabs}{booktabs} package. With the command \verb|\cref{...}| one can refer to labeled tables, figures, chapters, sections, and other numbered elements; the appropriate type name is selected automatically.
 \begin{table}[htb]
 	\caption{Considered input and target parameters.}
 	\label{tab:params}
@@ -37,7 +40,7 @@ In \tabref{tab:params} some arbitrary dummy parameters are summarized for demons
 		Actual voltage $q$-axis component & $u_\mathrm{q}$            & Input          \\
 		Actual current $d$-axis component & $i_\mathrm{d}$            & Input          \\
 		Actual current $q$-axis component & $i_\mathrm{q}$            & Input          \\
-		\hline
+		\midrule
 		Permanent magnet temperature      & $\vartheta_{\mathrm{PM}}$ & Output         \\
 		Stator teeth temperature          & $\vartheta_{\mathrm{ST}}$ & Output         \\
 		Stator winding temperature        & $\vartheta_{\mathrm{SW}}$ & Output         \\
@@ -46,24 +49,24 @@ In \tabref{tab:params} some arbitrary dummy parameters are summarized for demons
 	\end{tabular}
 \end{table}
 
-It is considered good style to use only horizontal lines for the top, bottom and between table body sections while avoiding vertical lines. This is because vertical lines are considered to be less readable and less aesthetic. The table is also centered and has a caption. The caption is placed above the table (while figures' captions are typically placed below the figure, compare \figref{fig:MPC}). This is a common style convention in scientific writing.
+It is considered good style to use horizontal lines only at the top and bottom of a table and between its body sections, while avoiding vertical lines. Vertical lines are generally considered less readable and less aesthetic. The table is also centered and has a caption. The caption is placed above the table (while figure captions are typically placed below the figure; compare \cref{fig:MPC}). This is a common style convention in scientific writing.
 
 \section{Mathematical typesetting}
 \label{subsec:normalization}
-This is an in-text equation example: $T(t)=3/2\psi_{\mathrm{PM}}i_{\mathrm{q}}(t)$. After this equation, we can continue writing normal text. A simple intended equation is
+This is an in-text equation example: $T(t)=3/2\psi_{\mathrm{PM}}i_{\mathrm{q}}(t)$. After this equation, we can continue writing normal text. A simple displayed equation is
 \begin{equation}
 	\label{eq:example}
 	\frac{\mathrm{d}}{\mathrm{d}t}x(t) = f(x(t),u(t),t),
 \end{equation}
-where $x(t)\in\mathbb{R}$ is the state, $u(t)\in\mathbb{R}$ is the input, $f(\cdot)\in\mathbb{R}\rightarrow\mathbb{R}$ represents the state dynamics and $t\in\left[0,T\right]$ is the time. In this scalar equation, all variables are represented in regular font. If any variable or parameter of an equation is of vectorial / matrix / multidimensional nature (e.g., $\bm{x}(t)\in\mathbb{R}^n$), it should be represented in bold font. For example,
+where $x(t)\in\mathbb{R}$ is the state, $u(t)\in\mathbb{R}$ is the input, $f\colon\mathbb{R}\times\mathbb{R}\times[0,T]\to\mathbb{R}$ represents the state dynamics, and $t\in\left[0,T\right]$ is the time. In this scalar equation, all variables are represented in italic font. If any variable or parameter of an equation is a vector, matrix, or multidimensional object (e.g., $\bm{x}(t)\in\mathbb{R}^n$), it should be represented in bold italic font. For example,
 
 \begin{equation*}
-	\bm{x}(t) = \bm{A}\bm{x}(t) + \bm{b}u(t)
+	\frac{\mathrm{d}}{\mathrm{d}t}\bm{x}(t) = \bm{A}\bm{x}(t) + \bm{b}u(t)
 \end{equation*}
-represents a linear time-invariant state-space example of  \eqref{eq:example}, where $\bm{A}\in\mathbb{R}^{n\times n}$ is the state matrix, $\bm{b}\in\mathbb{R}^{n}$ is the input vector and $u(t)\in\mathbb{R}$ is the input vector (which is the only non-bold symbol in the above equation due to its scalar nature). Note also that the last example equation is not numbered which is achieved by using the \verb|\begin{equation*}|\ldots\verb|\end{equation*}| environment. Discontinuing the numbering of an equation can be useful when the equation is not referred to in the text and if it is of minor importance.
+represents a linear time-invariant state-space counterpart to \eqref{eq:example}, where $\bm{x}(t)\in\mathbb{R}^n$ is the state vector, $\bm{A}\in\mathbb{R}^{n\times n}$ is the state matrix, $\bm{b}\in\mathbb{R}^{n}$ is the input vector, and $u(t)\in\mathbb{R}$ is the scalar input (and is therefore set in italic rather than bold italic). Note also that the last example equation is not numbered, which is achieved by using the \verb|\begin{equation*}|\ldots\verb|\end{equation*}| environment. Omitting an equation number can be useful when the equation is not referred to in the text and is of minor importance.
 
-\begin{infobox}[][Referring to equations]
-	Using the \verb|\eqref{...}| command one can directly refer to a labeled equation. For example, \eqref{eq:example} is a simple example of a first-order ordinary differential equation. Within the STEM community it is good practice to refer to equations in the parenthesis style (e.g., \enquote{\ldots as shown in \eqref{eq:example}}), that is, the parenthesis is already indicating an explicit reference to an equation making the usage of the word \enquote{equation} redundant.
+\begin{infobox}[title={Referring to equations}]
+	Using the \verb|\eqref{...}| command, one can directly refer to a labeled equation. For example, \eqref{eq:example} is a simple first-order ordinary differential equation. Within the STEM community, it is good practice to refer to equations in parenthetical form (e.g., \enquote{\ldots as shown in \eqref{eq:example}}); the parentheses already indicate an explicit reference, making the word \enquote{equation} redundant.
 \end{infobox}
 
 Equations can also be aligned and split:
@@ -76,31 +79,31 @@ Equations can also be aligned and split:
 	\end{split}
 \end{align}
 
-In \eqref{eq:splitline} the equation was split into two lines. Use this for long equations. Note also that the above equations are integrated in the text and reading flow which includes proper interpunctuation, that is, full stops and commas apply also to equations as if they would be normal text -- cf. \capref{subsec:interpunctuation}. Using the \verb|\capref{...}| command produces a reference to a labeled chapter/section/subsection within the document.
+In \eqref{eq:splitline} the equation was split into two lines. Use this for long equations. Note also that the above equations are integrated into the text and reading flow, which includes proper punctuation; that is, full stops and commas also apply to equations as if they were normal text---cf. \cref{subsec:interpunctuation}. The \verb|\cref{...}| command identifies this label as a subsection and prints the configured reference name accordingly.
 
 \subsection{Mathematical indices}
 
 The following conventions for typesetting variables, indices, and operators follow internationally recognized standards and guides, in particular \cite{ISO80000-2-2019,NIST-SP-811}.
 
-\begin{infobox}[][Index and operator rules]
+\begin{infobox}[title={Index and operator rules}]
 	For mathematical typesetting, follow these conventions:
 
 	\begin{itemize}
 		\item \textbf{Variables} are set in italic type (e.g., $x, y, t$).
 		\item \textbf{Descriptive subscripts/superscripts} (abbreviations of words) should be in upright (roman) font using \verb|\mathrm{...}| (e.g., $x_\mathrm{norm}$, $T_\mathrm{max}$).
 		\item \textbf{Variable indices} in subscripts/superscripts remain in italic type (e.g., $x_i$, where $i$ is a variable index).
-		\item \textbf{Mathematical operators} (e.g., `max`, `sin`, `log`, differential `d`) should be in upright font. Use predefined commands like \verb|\max| or \verb|\sin|, or \verb|\mathrm{d}| for the differential operator.
+		\item \textbf{Mathematical operators} (e.g., \texttt{max}, \texttt{sin}, \texttt{log}, differential \texttt{d}) should be in upright font. Use predefined commands like \verb|\max| or \verb|\sin|, or \verb|\mathrm{d}| for the differential operator.
 	\end{itemize}
 	This visually distinguishes textual descriptions from mathematical variables.
 \end{infobox}
 
-\begin{successbox}[][Correct formatting]
+\begin{successbox}[title={Correct formatting}]
 	Normalized value: $x_\mathrm{norm}(t)$ \\
 	Maximum value: $\max\left\{x_\mathrm{norm}(t)\right\}$ \\
 	An indexed variable: $x_i$
 \end{successbox}%
 
-\begin{errorbox}[][Incorrect formatting]
+\begin{errorbox}[title={Incorrect formatting}]
 	Normalized value: $x_{norm}(t)$ \\
 	Maximum value: $max \left\{x_{\mathrm{norm}}(t) \right\}$\\
 	An indexed variable: $x_{\mathrm{i}}$
@@ -108,7 +111,7 @@ The following conventions for typesetting variables, indices, and operators foll
 
 \subsection{Interpunctuation in equations}
 \label{subsec:interpunctuation}
-\begin{infobox}[][Punctuation rules]
+\begin{infobox}[title={Punctuation rules}]
 	Mathematical equations should be punctuated as part of the sentence structure:
 
 	\begin{itemize}
@@ -117,10 +120,10 @@ The following conventions for typesetting variables, indices, and operators foll
 		\item Never leave equations \enquote{floating} without punctuation.
 	\end{itemize}
 
-	The punctuation helps readers understand the logical flow and relationship between mathematical expressions and explanatory text. Likewise, ensure to integrate equations smoothly into the surrounding text such that they read naturally as part of the narrative.
+	The punctuation helps readers understand the logical flow and relationship between mathematical expressions and explanatory text. Likewise, integrate equations smoothly into the surrounding text so that they read naturally as part of the narrative.
 \end{infobox}
 %
-\begin{successbox}[][Correct punctuation]
+\begin{successbox}[title={Correct punctuation}]
 	The area of a circle is given by
 	\begin{equation}
 		A = \pi r^2,
@@ -131,7 +134,7 @@ The following conventions for typesetting variables, indices, and operators foll
 	\end{equation}
 \end{successbox}
 %
-\begin{errorbox}[][Missing punctuation]
+\begin{errorbox}[title={Missing punctuation}]
 	The area of a circle is given by
 	\begin{equation}
 		A = \pi r^2
@@ -146,29 +149,29 @@ The following conventions for typesetting variables, indices, and operators foll
 \label{subsec:nomenclature}
 A nomenclature is a list of symbols and their definitions used in the document. It helps readers understand the meaning of symbols and notation used throughout the text. We utilize the \href{https://ctan.org/pkg/glossaries}{glossaries} package to automatically create a nomenclature -- separated into a general notation section and a list of symbols. The nomenclature is printed in the back matter of the document.
 
-\begin{infobox}[][Adding notation and symbol entries]
-	Inside the file \texttt{notation.tex} all notation entries of the manuscript are gathered and the command \verb|\newglossaryentry{...}{type={notation}, ...}| adds new ones. The notation describes the general mathematical typesetting rules and conventions used in the document. Complementary, within \texttt{symbols.tex} the command \verb|\newglossaryentry{...}{type={symbols}, ...}| is used to add symbol entries.
+\begin{infobox}[title={Adding notation and symbol entries}]
+	Inside the file \texttt{notation.tex}, all notation entries of the manuscript are gathered, and the command \verb|\newglossaryentry{...}{type={notation}, ...}| adds new ones. The notation describes the general mathematical typesetting rules and conventions used in the document. In addition, the command \verb|\newglossaryentry{...}{type={symbols}, ...}| in \texttt{symbols.tex} is used to add symbol entries.
 \end{infobox}
 
 \section{Units}
 \label{sec:units}
 In engineering, it is important to use the correct units.
 
-\begin{infobox}[][Physical quantity components]
-	According to ISO 80000-1, any value of a physical quantity $X$ ix expressed the the product of a numerical value $\{X\}$ and a unit of measurement $[X]$ as follows: $X = \{X\} [X]$. For example, the speed of light can be expressed as $c = \{c\} [c] = \SI[per-mode=fraction, fraction-command=\nicefrac]{299792458}{\meter\per\second}$.
+\begin{infobox}[title={Physical quantity components}]
+	According to ISO~80000-1 \cite{ISO80000-1-2022}, any value of a physical quantity $X$ is expressed as the product of a numerical value $\{X\}$ and a unit of measurement $[X]$ as follows: $X = \{X\} [X]$. Hence, $[X]$ is also called the unit operator. For example, the speed of light can be expressed as $c = \{c\} [c] = \SI[per-mode=fraction, fraction-command=\nicefrac]{299792458}{\meter\per\second}$.
 \end{infobox}
 
-This is called a quantity equation (also called complete equation), where the unit of measurement and the physical unit are explicitly separated to represent a physical quantity. When using a quantity equation, ensure sticking to the International System of Units (SI units). This requires to display SI units in upright letters and in roman font. The numerical number is separated from the SI unit by a space. The easiest way to achieve this is by using the \href{https://ctan.org/pkg/siunitx}{siunitx} package.
+This is called a quantity equation (also called a complete equation), where the numerical value and the unit of measurement are explicitly separated to represent a physical quantity. When using a quantity equation, adhere to the International System of Units (SI). This requires displaying SI units in upright roman type. The numerical value is separated from the SI unit by a space. The easiest way to achieve this is by using the \href{https://ctan.org/pkg/siunitx}{siunitx} package.
 
-\begin{errorbox}[][Incorrect SI unit representation examples]
+\begin{errorbox}[title={Incorrect SI unit representation examples}]
 	Italic unit font: $v = 5\,\mathit{m/s}$ \\
 	Missing gap between number and unit: $v = 5\mathrm{m/s}$\\
-	Apply unit operator to a unit (and not to a quantity): $[\mathrm{m/s}]$
+	Unit operator applied to a unit (rather than to a quantity): $[\mathrm{m/s}]$
 \end{errorbox}
 
 \section{Figures}
 \label{sec:architecture}
-In \figref{fig:MPC} is an example how to insert figures into the manuscript. We can refer to labeled figures with the \verb|\figref{...}| command. Please note that figures should be always integrated as vector graphics (e.g., PDF, EPS, SVG) and not as pixel-based raster graphics (e.g., PNG, JPEG). This is to ensure that the figures are crystal clear and require minimum file size.\footnote{There are only very few and rare exceptions to this rule. Besides photographs (e.g., of laboratory setups) figures covering an excessive amount of data content, such as scatter plots with millions of data points (slowing down the vector graphic representation), can be mentioned as such exceptions. And by the way: this is an example of a footnote which can be used to place comments or small excursions at the bottom of a page.} Hence, ensure that you are preparing your explanatory graphics in a vector-based software (e.g., Inkscape) and also export figures prepared in Matlab, Python, Julia, etc. in a suitable vector format.
+\Cref{fig:MPC} provides an example of how to insert figures into the manuscript. We can refer to labeled figures with the \verb|\cref{...}| command. Diagrams and plots should normally be included as vector graphics. PDF is the preferred direct input format for LuaLaTeX; convert SVG or EPS exports to PDF before inclusion. Use pixel-based formats such as PNG or JPEG only where raster graphics are appropriate.\footnote{Examples include photographs of laboratory setups and plots containing millions of data points, for which a vector representation may be impractically large or slow. This is also an example of a footnote, which can place a short qualification or excursion at the bottom of a page.} Prepare explanatory graphics in vector-based software such as Inkscape and export figures created in MATLAB, Python, Julia, or similar tools in a suitable vector format.
 
 \begin{figure}[htb]
 	\centering
@@ -177,53 +180,53 @@ In \figref{fig:MPC} is an example how to insert figures into the manuscript. We 
 	\label{fig:MPC}
 \end{figure}
 
-\begin{infobox}[][Figure size and font formatting]
-	When exporting a figure from a plotting software, ensure that the figure size is appropriate for the manuscript and is easily readable. A good rule of thumb is to use a font size of at least \SI{8}{\point} for all text elements (axis labels, legends, etc.) in the figure. To prevent font size inconsistencies, set the canvas size of each figure to the final size used in the manuscript when you start creating a new figure. If you are starting resizing a figure (e.g., manipulating its width or scale within the \verb|\includegraphics{...}| command) to squeeze it into the manuscript, this is a clear indication that the figure size was not properly set during the figure creation process and the resulting figure content font sizes will be likely inconsistent.
+\begin{infobox}[title={Figure size and font formatting}]
+	When exporting a figure from plotting software, ensure that the figure size is appropriate for the manuscript and that the figure is easily readable. A good rule of thumb is to use a font size of at least \SI{8}{\point} for all text elements (axis labels, legends, etc.) in the figure. To prevent font-size inconsistencies, set the canvas size of each figure to its final size in the manuscript when you start creating it. If you start resizing a figure (e.g., manipulating its width or scale within the \verb|\includegraphics{...}| command) to squeeze it into the manuscript, this is a clear indication that the figure size was not properly set during figure creation, and the font sizes in the resulting figure will likely be inconsistent.
 \end{infobox}
 
-\subsection{Plotting with tikz}
+\subsection{Plotting with TikZ}
 
-The package \href{https://ctan.org/pkg/pgf}{pgf} provides a powerful tool to create high-quality plots directly in \LaTeX. The \href{https://ctan.org/pkg/pgfplots}{pgfplots} package builds on top of pgf and provides a user-friendly interface for creating plots using various tikz libraries. Below are two examples of tikz figures. The code for these figures can be found in the \texttt{fig/tikz} folder. Compared to other plotting tools, tikz has the advantage that the font sizes and styles are consistent with the rest of the manuscript. However, creating complex plots with tikz requires some learning curve. Anyhow, there's more than one way to skin a cat, and if you prefer to use other plotting tools (e.g., Matlab, Python, Julia, etc.), this is perfectly fine as well. Just ensure that the exported figures are of high quality and follow the guidelines mentioned above.
-\begin{figure}[ht]
+The package \href{https://ctan.org/pkg/pgf}{PGF} provides a powerful tool for creating high-quality plots directly in \LaTeX. The \href{https://ctan.org/pkg/pgfplots}{PGFPlots} package builds on PGF and provides a user-friendly interface for creating plots using various TikZ libraries. Below are two examples of TikZ figures. The code for these figures can be found in the \texttt{fig/tikz} folder. Compared to other plotting tools, TikZ has the advantage that the font sizes and styles are consistent with the rest of the manuscript. However, creating complex plots with TikZ has a learning curve. Other plotting tools (e.g., MATLAB, Python, or Julia) are perfectly suitable as well. Just ensure that the exported figures are of high quality and follow the guidelines mentioned above.
+\begin{figure}[htb]
 	\centering
 	\input{fig/tikz/tikz_timeseries}
-	\caption{Example of a tikz figure (time series plot).}
+	\caption{Example of a TikZ figure (time-series plot).}
 	\label{fig:tikz_example_01}
 \end{figure}
-\begin{errorbox}[][Unit operator as part of a figure label]
-	Unfortunately, many literature sources incorrectly apply the unit operator to a unit within figure labels, such as \enquote{$i\, [\mathrm{A}]$}. This is incorrect because the unit operator should only be applied to physical quantities and not to units. Correct ways of labeling would be \enquote{$i\,\text{in}\,\mathrm{A}$} or \enquote{$i$ / $\mathrm{A}$}, compare \figref{fig:tikz_example_01}.
+\begin{errorbox}[title={Unit operator as part of a figure label}]
+	Unfortunately, many literature sources incorrectly apply the unit operator to a unit within figure labels, such as \enquote{$i\, [\mathrm{A}]$}. This is incorrect because the unit operator should only be applied to physical quantities and not to units. Correct ways of labeling would be \enquote{$i\,\text{in}\,\mathrm{A}$} or \enquote{$i$ / $\mathrm{A}$}; compare \cref{fig:tikz_example_01}.
 \end{errorbox}
 
-\begin{figure}[ht]
+\begin{figure}[htb]
 	\centering
 	\input{fig/tikz/tikz_surf}
-	\caption{Example of another tikz figure (surface plot).}
+	\caption{Example of another TikZ figure (surface plot).}
 	\label{fig:tikz_example_02}
 \end{figure}
 
-\subsection{Circuits with circuitikz}
-The specialized package \href{https://ctan.org/pkg/circuitikz}{circuitikz} provides a powerful tool to create high-quality electrical circuit diagrams directly in \LaTeX. An example is shown in \figref{fig:circuitikz_example}. The code for this figure can be found in the \texttt{fig/circuitikz} folder.
-\begin{figure}[ht]
+\subsection{Circuits with CircuiTikZ}
+The specialized package \href{https://ctan.org/pkg/circuitikz}{CircuiTikZ} provides a powerful tool for creating high-quality electrical circuit diagrams directly in \LaTeX. An example is shown in \cref{fig:circuitikz_example}. The code for this figure can be found in the \texttt{fig/circuitikz} folder.
+\begin{figure}[htb]
 	\centering
 	\input{fig/circuitikz/circ_example}
-	\caption{Example of a circuitikz figure.}
+	\caption{Example of a CircuiTikZ figure.}
 	\label{fig:circuitikz_example}
 \end{figure}
 
 \subsection{Circuits with Inkscape library}
-As an alternative to circuitikz, there is a curated Inkscape template for many electrical engineering symbols (incl. circuits) hosted on GitHub: \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{https://github.com/upb-lea/Inkscape\_electric\_Symbols}. An overview is shown in \figref{fig:inkscape_library}. The included figure is a pdf-file, which is generated before by an Inkscape export. Both ways, circuitikz and Inkscape, are perfectly fine and can be used depending on the user's preference.
+As an alternative to CircuiTikZ, there is a curated Inkscape template for many electrical engineering symbols (incl. circuits) hosted on GitHub: \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{https://github.com/upb-lea/Inkscape\_electric\_Symbols}. An overview is shown in \cref{fig:inkscape_library}. The included PDF file was previously generated by an Inkscape export. Both CircuiTikZ and Inkscape are suitable and can be used depending on the user's preference.
 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[]{fig/inkscape/Inkscape_Symbols_All.pdf}
-	\caption{Overview of symbols provided from the \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{Inkscape electrical symbols library}.}
+	\caption{Overview of symbols provided by the \href{https://github.com/upb-lea/Inkscape_electric_Symbols}{Inkscape electrical symbols library}.}
 	\label{fig:inkscape_library}
 \end{figure}
 
 \subsection{Color schemes}
-When creating figures, it is important to use color schemes that are accessible to all readers, including those with color vision deficiencies. We recommend sticking to a predefined colorblind-friendly scheme, such as the \href{https://sronpersonalpages.nl/~pault/}{Paul Tol's} color schemes. Within \LaTeX, the \href{https://ctan.org/pkg/colorblind}{colorblind} package provides easy access to these color schemes.
+When creating figures, it is important to use color schemes that are accessible to all readers, including those with color-vision deficiencies. We recommend using a predefined color-blind-friendly scheme, such as \href{https://sronpersonalpages.nl/~pault/}{Paul Tol's} color schemes. Within \LaTeX, the \href{https://ctan.org/pkg/colorblind}{colorblind} package provides easy access to these color schemes.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 	\centering
 	\begin{tikzpicture}[x=1.0cm, y=0.6cm]
 		\fill[T-Q-V1] (0,0) circle[radius=0.45cm];
@@ -237,27 +240,31 @@ When creating figures, it is important to use color schemes that are accessible 
 	\label{fig:vibrant}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htb]
 	\centering
 	\drawSchemeC[0.7\textwidth]{T-D-S}\\
 	\caption{Paul Tol's \textit{sunset} diverging colour scheme (T-D-S).}
 \end{figure}
 
+\input{chapters/pseudocode.tex}
+
 \section{Acronyms and glossaries}
 \label{sec:acronyms}
-This is an example of an acronym entry: \gls{mlp}. The first time an acronym is used, it is spelled out in full and the acronym is placed in brackets. The acronym is then automatically added to the list of acronyms at the end of the document. The list of acronyms is created using the \href{https://ctan.org/pkg/glossaries}{glossaries} package. The \texttt{glossaries.tex} file is used to define the acronyms. Starting the second time an acronym is used, only the short acronym form is used, such as \gls{mlp}.
+This is an example of an acronym entry: \gls{mlp}. The first time an acronym is used, it is spelled out in full and the acronym is placed in brackets. The acronym is then automatically added to the list of acronyms at the end of the document. The list of acronyms is created using the \href{https://ctan.org/pkg/glossaries}{glossaries} package. The \texttt{acronyms.tex} file is used to define the acronyms. From the second use onward, only the short acronym form is used, such as \gls{mlp}.
 
-This is an example of a glossary entry: \gls{CHPg}. The glossary is different from the acronyms as it lists terms together with a short definition for those terms (with the glossary list at the end of the document). A glossary is sometimes used in larger books or theses to explain terms that are not commonly known, but for most scientific theses or papers it is rather uncommon to use a glossary. Further details on the usage of the \href{https://ctan.org/pkg/glossaries}{glossaries} package can be found in its documentation.
+This is an example of a glossary entry: \gls{CHPg}. A glossary differs from a list of acronyms because it lists terms together with short definitions (with the glossary at the end of the document). A glossary is sometimes used in larger books or theses to explain terms that are not commonly known, but it is rather uncommon in most scientific theses or papers. Further details on the use of the \href{https://ctan.org/pkg/glossaries}{glossaries} package can be found in its documentation.
 
 \section{Printing}
 When printing the final version of the thesis, note the following:
 \begin{itemize}
-	\item The class file has the option \verb|online| to create a PDF version of the thesis that is optimized for on-screen reading. Conversely, if you want to print the thesis on paper, remove the \verb|online| option from the \verb|\documentclass[...]{IASthesis}| command in the \texttt{main.tex} file. This will adjust the margins and layout for printing on paper.
-	\item When printing on paper, utilize double-sided printing to save paper and resources. Do not(!) print single-sided.
+	\item Use the class option \verb|medium=screen| to create a PDF optimized for on-screen reading. Use \verb|medium=print| for a thesis intended to be printed on paper. Select the profile in the \verb|\documentclass[...]{IASthesis}| command in the \texttt{main.tex} file.
+	\item The print profile adds a \SI{10}{\milli\metre} binding correction. Confirm the required value with the print shop before final production and override it in \texttt{chapters/header.tex}, if necessary, with a command such as \verb|\geometry{bindingoffset=12mm}|.
+	\item Put \verb|\chaptershorttitle{Concise title}| immediately after each \verb|\chapter{Full title}|. The print profile combines this concise title with the chapter number in the even-page outer header while retaining the full title in the table of contents and PDF outline.
+	\item When printing on paper, use double-sided printing to save paper and resources. Do not print single-sided!
 \end{itemize}
 
 \subsection{Publish your work}
 \label{sec:publish}
-We encourage students to voluntarily publish their submitted work through the University Siegen library. Visit the following link for more information on the publishing process: \href{https://www.ub.uni-siegen.de/en/search-tools-and-catalogues/eresources/opus-siegen/information-for-authors/publication-types/bachelor-and-master-theses/}{https://www.ub.uni-siegen.de/en/search-tools-and-catalogues/eresources/opus-siegen/information-for-authors/publication-types/bachelor-and-master-theses/}.
+We encourage students to voluntarily publish their submitted work through the University of Siegen Library. Visit the following link for more information on the publishing process: \href{https://dspace.ub.uni-siegen.de/home}{https://dspace.ub.uni-siegen.de/home}.
 
-If you like to publish your work, follow this official process first. Refrain from publishing your work on other third-party platforms (e.g., ResearchGate, Academia.edu, etc.) before the finalizing the official publication process!
+If you would like to publish your work, follow this official process first. Refrain from publishing your work on other third-party platforms (e.g., ResearchGate or Academia.edu) before finalizing the official publication process.

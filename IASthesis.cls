@@ -1,46 +1,101 @@
-% IAS-thesis DOCUMENT CLASS -- version 1.1 (2025/10/08)
-%% Partitially based on svmono.cls and jku.cls
-%% Based on LEAthesis.cls from Paderborn University, LEA Department
-%%
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{IASthesis}[2025/10/08 v1.1 IAS global LaTeX document class for theses]
+% IASthesis document class -- version 1.6 (2026/08/01)
+% Derived in part from svmono.cls, jku.cls, and LEAthesis.cls.
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesClass{IASthesis}[2026/08/01 v1.6 IAS global LaTeX document class for theses]
 
-\LoadClass[12pt,twoside,a4paper]{book} % Base class and page layout
+% --- Class options and base class ---
+\newif\ifdeutsch
+\newif\ifenglish
+\newif\ifias@englishoption
+\newif\ifias@deutschoption
+\newif\ifonline
+\newif\ifdiss
+\newif\iffinal
+\newif\ifiasthanks
+\onlinetrue
+\def\ias@medium{screen}
 
-\newif\ifdeutsch  % German language flag
-\newif\ifenglish  % English language flag
-\newif\ifonline   % Online (single-sided, header style) variant
-\newif\ifdiss     % Dissertation variant
-\newif\iffinal    % Final (approved) version toggle
+\DeclareOption{english}{\ias@englishoptiontrue}
+\DeclareOption{deutsch}{\ias@deutschoptiontrue}
+\DeclareOption{medium=screen}{\onlinetrue\def\ias@medium{screen}}
+\DeclareOption{medium=print}{\onlinefalse\def\ias@medium{print}}
+\DeclareOption{online}{%
+	\ClassWarningNoLine{IASthesis}{Option `online' is deprecated; use `medium=screen'}%
+	\onlinetrue\def\ias@medium{screen}}
+\DeclareOption{diss}{\disstrue}
+\DeclareOption{final}{\finaltrue}
+\DeclareOption{thanks}{\iasthankstrue}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+\ProcessOptions\relax
 
-\DeclareOption{english}{\englishtrue} % Class option to set English strings
-\DeclareOption{deutsch}{\deutschtrue} % Class option to set German strings
-\DeclareOption{online}{\onlinetrue}   % Optimize layout for online reading
-\DeclareOption{diss}{\disstrue}       % Dissertation title page and fields
-\DeclareOption{final}{\finaltrue}     % Marks final, approved dissertation
-\ProcessOptions\relax                  % Apply class options
+% Default to English; conflicting language options raise an error and use English.
+\ifias@englishoption
+	\ifias@deutschoption
+		\ClassError{IASthesis}{Options `english' and `deutsch' are mutually exclusive}{Choose exactly one language option. English is used when neither option is given.}%
+	\fi
+	\englishtrue
+	\deutschfalse
+\else
+	\ifias@deutschoption
+		\deutschtrue
+		\englishfalse
+	\else
+		\englishtrue
+		\deutschfalse
+	\fi
+\fi
+
+\iffinal\ifdiss\else
+		\ClassWarningNoLine{IASthesis}{Option `final' has no effect without option `diss'}%
+	\fi\fi
+
+% Screen is one-sided; print opens chapters on right-hand pages.
+\ifonline
+	\LoadClass[12pt,oneside,openany,a4paper]{book}
+\else
+	\LoadClass[12pt,twoside,openright,a4paper]{book}
+\fi
+
+% --- Thesis metadata ---
+% Defaults and public setters used by title pages and PDF metadata.
+\def\@shorttitle{}
+\def\@thesistype{Thesis}
+\def\@matrnr{}
+\def\@supervisora{}
+\def\@supervisorb{}
+\def\@thesisnr{}
+\def\@filingdate{}
+\def\@birthdate{}
+\def\@birthplace{}
+\def\@examdate{}
+\def\@publicationyear{}
+\def\@thesiskeywords{}
+\def\@thesissubject{}
 
 \DeclareRobustCommand*{\title}[1]{\gdef\@title{#1}}
 \DeclareRobustCommand*{\shorttitle}[1]{\gdef\@shorttitle{#1}}
 \DeclareRobustCommand*{\author}[1]{\gdef\@author{#1}}
 \DeclareRobustCommand*{\date}[1]{\gdef\@date{#1}}
-\ifdiss\else\DeclareRobustCommand*{\thesistype}[1]{\gdef\@thesistype{#1}}\fi
-\ifdiss\else\DeclareRobustCommand*{\matrnr}[1]{\gdef\@matrnr{#1}}\fi
+\DeclareRobustCommand*{\keywords}[1]{\gdef\@thesiskeywords{#1}}
+\DeclareRobustCommand*{\thesissubject}[1]{\gdef\@thesissubject{#1}}
+\DeclareRobustCommand*{\thesistype}[1]{\gdef\@thesistype{#1}}
+\DeclareRobustCommand*{\matrnr}[1]{\gdef\@matrnr{#1}}
 \DeclareRobustCommand*{\supervisora}[1]{\gdef\@supervisora{#1}}
 \DeclareRobustCommand*{\supervisorb}[1]{\gdef\@supervisorb{#1}}
-\ifdiss\else\DeclareRobustCommand*{\thesisnr}[1]{\gdef\@thesisnr{#1}}\fi
-\ifdiss\else\DeclareRobustCommand*{\filingdate}[1]{\gdef\@filingdate{#1}}\fi
-\ifdiss\DeclareRobustCommand*{\birthdate}[1]{\gdef\@birthdate{#1}}\fi
-\ifdiss\DeclareRobustCommand*{\birthplace}[1]{\gdef\@birthplace{#1}}\fi
-\ifdiss\DeclareRobustCommand*{\examdate}[1]{\gdef\@examdate{#1}}\fi
-\ifdiss\DeclareRobustCommand*{\publicationyear}[1]{\gdef\@publicationyear{#1}}\fi
-\ifdiss\DeclareRobustCommand*{\thesisnr}[1]{\gdef\@thesisnr{#1}}\fi
-%
+\DeclareRobustCommand*{\thesisnr}[1]{\gdef\@thesisnr{#1}}
+\DeclareRobustCommand*{\filingdate}[1]{\gdef\@filingdate{#1}}
+\DeclareRobustCommand*{\birthdate}[1]{\gdef\@birthdate{#1}}
+\DeclareRobustCommand*{\birthplace}[1]{\gdef\@birthplace{#1}}
+\DeclareRobustCommand*{\examdate}[1]{\gdef\@examdate{#1}}
+\DeclareRobustCommand*{\publicationyear}[1]{\gdef\@publicationyear{#1}}
 
-%% Language phrases
+% --- Localized strings ---
 \ifenglish%
 	\def\abstractname{Abstract}%
 	\def\ackname{Acknowledgements}%
+	\def\iassuccessname{Success}%
+	\def\iaserrorname{Error}%
+	\def\iasinfoname{Info}%
 	\def\andname{and}%
 	\def\bibname{References}%
 	\def\by{by}%
@@ -51,10 +106,11 @@
 	\def\claimname{Claim}%
 	\def\conjecturename{Conjecture}%
 	\def\contentsname{Contents}%
+	\def\iastocheadername{Table of contents}%
 	\def\corollaryname{Corollary}%
 	\def\datename{Date}%
 	\def\declaration{Declaration of Authorship}%
-	\def\declarationtext{I declare that I have authored this thesis independently, that I have not used other than the declared sources, and that I have explicitly marked all material (including figures and tables) which has been quoted either literally or by content from the used sources. I am aware that the use of AI-supported software tools is a (permissible) aid, the use and scope of which must be indicated. This paper was not previously presented to another examination board and has not been published.}%
+	\def\declarationtext{I declare that I have authored this thesis independently, used no sources other than those declared, and explicitly marked all material (including figures and tables) quoted either verbatim or in substance from those sources. I am aware that AI-supported software tools are permissible aids whose use and scope must be indicated. This thesis was not previously presented to another examination board and has not been published.}%
 	\def\definitionname{Definition}%
 	\def\emailname{e-mail}%
 	\def\examplename{Example}%
@@ -64,8 +120,8 @@
 	\def\forewordname{Foreword}%
 	\def\glossaryname{Glossary}%
 	\def\notationname{Notation}%
-	\def\symbolname{Symbols}%
-	\def\keywordname{{\bf Key words:}}%
+	\def\iassymbolsname{Symbols}%
+	\def\keywordname{{\bf Keywords:}}%
 	\def\indexname{Index}%
 	\def\lemmaname{Lemma}%
 	\def\listsname{Lists}%
@@ -91,17 +147,18 @@
 	\def\subclassname{{\it Subject Classifications\/}:}%
 	\def\supervisor{Supervisor}%
 	\def\tablename{Tab.}%
-	\def\thesisnrname{Thesis Nr.}%
+	\def\thesisnrname{Thesis No.}%
 	\def\theoremname{Theorem}%
 	\def\titledepartment{Chair of Interconnected Automation Systems}%
 	\def\titleinstitute{Department of Electrical Engineering and Computer Science}%
 	\def\titleuniversity{University of Siegen}
 \fi
-%
-% German section
 \ifdeutsch
 	\def\abstractname{Zusammenfassung}%
 	\def\ackname{Danksagung}%
+	\def\iassuccessname{Erfolg}%
+	\def\iaserrorname{Fehler}%
+	\def\iasinfoname{Hinweis}%
 	\def\andname{und}%
 	\def\lastandname{ und}%
 	\def\appendixname{Anhang}%
@@ -112,12 +169,13 @@
 	\def\claimname{Behauptung}%
 	\def\conjecturename{Hypothese}%
 	\def\contentsname{Inhaltsverzeichnis}%
+	\def\iastocheadername{Inhaltsverzeichnis}%
 	\def\corollaryname{Korollar}%
 	\def\datename{Datum}%
 	\def\declaration{Eidesstattliche Erklärung}%
-	\def\declarationtext{Ich versichere, dass ich die vorliegende wissenschaftliche Arbeit selbstständig verfasst und keine anderen als die angegebenen Hilfsmittel verwendet habe. Die Stellen der Arbeit, die anderen Werken dem Wortlaut oder dem Sinn nach entnommen sind, wurden unter Angabe der Quelle als Entlehnung deutlich gemacht. Das gleiche gilt auch für beigegebene Skizzen und Darstellungen. Mir ist bewusst, dass die Verwendung von KI-gestützen Softwarewerkzeugen ein (zulässiges) Hilfsmittel darstellt, dessen Nutzung und dessen Umfang angegeben werden muss. Diese Arbeit hat in gleicher oder ähnlicher Form meines Wissens nach noch keiner Prüfungsbehörde vorgelegen.}%
+	\def\declarationtext{Ich versichere, dass ich die vorliegende wissenschaftliche Arbeit selbstständig verfasst und keine anderen als die angegebenen Hilfsmittel verwendet habe. Die Stellen der Arbeit, die anderen Werken dem Wortlaut oder dem Sinn nach entnommen sind, wurden unter Angabe der Quelle als Entlehnung deutlich gemacht. Das Gleiche gilt auch für beigegebene Skizzen und Darstellungen. Mir ist bewusst, dass die Verwendung von KI-gestützten Softwarewerkzeugen ein (zulässiges) Hilfsmittel darstellt, dessen Nutzung und Umfang angegeben werden müssen. Diese Arbeit hat in gleicher oder ähnlicher Form meines Wissens nach noch keiner Prüfungsbehörde vorgelegen.}%
 	\def\definitionname{Definition}%
-	\def\emailname{E-mail}%
+	\def\emailname{E-Mail}%
 	\def\examplename{Beispiel}%
 	\def\exercisename{\"Ubung}%
 	\def\figurename{Abb.}%
@@ -125,7 +183,7 @@
 	\def\forewordname{Geleitwort}%
 	\def\glossaryname{Glossar}%
 	\def\notationname{Notation}%
-	\def\symbolname{Liste der Symbole}%
+	\def\iassymbolsname{Liste der Symbole}%
 	\def\keywordname{{\bf Schl\"usselw\"orter:}}%
 	\def\indexname{Sachverzeichnis}%
 	\def\lemmaname{Lemma}%
@@ -154,163 +212,187 @@
 	\def\tablename{Tab.}%
 	\def\thesisnrname{Nummer der Arbeit}%
 	\def\theoremname{Theorem}%
-	\def\titledepartment{Professur für Vernetzte Automatisierungssysteme}%
+	\def\titledepartment{Professur für Interconnected Automation Systems}%
 	\def\titleinstitute{Department Elektrotechnik und Informatik}%
 	\def\titleuniversity{Universit\"at Siegen}
 \fi
 
-%% Hyphenation
-\RequirePackage[hyphens]{url} % Allow URL line breaks at hyphens
+% --- Engine and URL handling ---
+\RequirePackage[hyphens]{url}
+\RequirePackage{iftex}
+\ifLuaTeX\else
+	\ClassError{IASthesis}{LuaLaTeX is required}{Compile with `latexmk`, which is configured to use LuaLaTeX.}%
+\fi
 
-%%Graphics
-\RequirePackage{graphicx,grffile} % Graphics inclusion + robust file name handling
-\graphicspath{{fig/}{include/}{figures/}{images/}{../include/}{../figures/}{../images/}} % Graphics search paths
+% --- Graphics and floats ---
+\RequirePackage{graphicx}
+\graphicspath{{fig/}{include/}{figures/}{images/}{../include/}{../figures/}{../images/}}
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
+% Scale images without explicit dimensions to the available page area.
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\RequirePackage{epsfig} % Legacy EPS inclusion support
-%\pdfminorversion=7
-\RequirePackage{rotating} % Sideways figures/tables
-\RequirePackage[section]{placeins}% Keep floats (figures/tables) within their respective section
-\RequirePackage{lmodern,etoolbox,letltxmacro} % Latin Modern fonts, macro utilities, LaTeX macro helpers
-\RequirePackage{setspace} % Line spacing control
+\RequirePackage{setspace}
 
-%% Math env
-\RequirePackage[sumlimits,intlimits]{amsmath}	% Mathematical typesetting
-\RequirePackage{amssymb}						% AMS symbol collection
-\RequirePackage{amstext}						% Text inside a formula
-\RequirePackage{amsfonts}						% Additional fonts and symbols
-\RequirePackage{amsxtra}						% Additional AMS features
-\RequirePackage{amsopn}							% Define custom operators
-\RequirePackage{amscd}							% Simple commutative diagrams
-\RequirePackage{amsbsy}							% Bold mathematical symbols
-\RequirePackage{bm}                     % Bold symbols in math environments
-\RequirePackage[scaled]{helvet}         % Helvetica font, scaled to match the size of the main font
-\RequirePackage{lipsum}                 % for dummy text
-\RequirePackage{nicefrac}               % Better fractions in math mode
+% --- Fonts and mathematics ---
+\RequirePackage[sumlimits,intlimits]{amsmath}
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\setmainfont{Latin Modern Roman}
+\setsansfont{TeX Gyre Heros}[Scale=MatchLowercase]
+\setmonofont{Latin Modern Mono}
+\setmathfont{Latin Modern Math}
+\providecommand{\bm}[1]{\symbfit{#1}} % Compatibility with earlier manuscripts.
 
-%% SI units
+% --- Units ---
+% The decimal marker follows the selected document language.
 \ifdeutsch
 	\RequirePackage[
 		free-standing-units,
 		space-before-unit,
-		number-unit-product = \,,
+		quantity-product = \,,
 		output-decimal-marker = {,},
 		per-mode=fraction,
-		separate-uncertainty = true,
-		multi-part-units = repeat
+		uncertainty-mode = separate,
+		separate-uncertainty-units = repeat
 	]{siunitx}
 \else
 	\RequirePackage[
 		free-standing-units,
 		space-before-unit,
-		number-unit-product = \,,
+		quantity-product = \,,
 		output-decimal-marker = {.},
 		per-mode=fraction,
-		separate-uncertainty = true,
-		multi-part-units = repeat
+		uncertainty-mode = separate,
+		separate-uncertainty-units = repeat
 	]{siunitx}
 \fi
-\DeclareSIUnit{\point}{pt} % define point unit for font sizes
+\DeclareSIUnit{\point}{pt}
 
-%% Text settings
-\RequirePackage{ifxetex,ifluatex} % Engine detection (XeTeX/LuaLaTeX)
-\RequirePackage{fix-cm} % Fixes for Computer Modern fonts scaling
-\RequirePackage{setspace}
-\RequirePackage{enumitem} % Fine-grained list spacing and labels
-\RequirePackage{datetime2} % Modern date/time formatting
-\RequirePackage[T1]{fontenc} % T1 font encoding (better hyphenation)
-\RequirePackage[utf8]{inputenc} % UTF-8 input (pdfLaTeX)
-\RequirePackage{upquote} % Straight quotes in verbatim/tt fonts
+% --- Text and language ---
+\RequirePackage{enumitem}
+\RequirePackage{upquote}
 
-%\RequirePackage{microtype} % Character protrusion and font expansion for nicer justification
-\RequirePackage{xspace} % Smart spacing after macros
-\RequirePackage{blindtext} % Dummy text for examples
-\RequirePackage[parfill]{parskip} % Space between paragraphs, no indent
+\RequirePackage{microtype}
+\RequirePackage[parfill]{parskip}
 
-\RequirePackage{csquotes} % Language-aware quotation marks
+% Load both languages for reusable auxiliary files, then configure quotations.
 \ifdeutsch
-	\RequirePackage[ngerman]{babel}
+	\RequirePackage[english,main=ngerman]{babel}
+\else
+	\RequirePackage[ngerman,main=english]{babel}
 \fi
-\ifenglish
-	\RequirePackage[english]{babel}
-\fi
+\RequirePackage{csquotes}
 
-\RequirePackage{algorithm} % Floating algorithm environment
-\RequirePackage{algpseudocode} % Pseudocode layout (algorithmicx)
+% --- Algorithms ---
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+\providecommand*{\toclevel@algorithm}{1}
+% Keep English list titles in sentence case, including after language switches.
+\def\ias@englishlistnames{%
+	\renewcommand{\listtablename}{List of tables}%
+	\renewcommand{\listfigurename}{List of figures}%
+	\renewcommand{\listalgorithmname}{List of algorithms}%
+}
+\addto\captionsenglish{\ias@englishlistnames}
+\ifenglish\ias@englishlistnames\fi
+\ifdeutsch\renewcommand{\listalgorithmname}{Algorithmenverzeichnis}\fi
 
-\RequirePackage{xcolor} % Color definitions and usage
-%--- Colorblind-friendly color palette (derived from Okabe–Ito scheme) ---
-
-\definecolor{oiGreen}{HTML}{009E73}  % #009E73 (bluish green)
-\definecolor{oiVermilion}{HTML}{CC2936}  % #CC2936 (more aggressive red)
-\definecolor{oiGrey}{HTML}{5D5D5D}       % #5D5D5D (grey)
-
-% Softer fills derived from the brand hues:
+% --- Colors ---
+% High-contrast accents and light fills for diagrams and callouts.
+\RequirePackage{xcolor}
+\definecolor{oiGreen}{HTML}{009E73}
+\definecolor{oiVermilion}{HTML}{CC2936}
+\definecolor{oiGrey}{HTML}{5D5D5D}
 \colorlet{oiGreenFill}{oiGreen!6!white}
 \colorlet{oiVermilionFill}{oiVermilion!8!white}
 \colorlet{oiGreyFill}{oiGrey!8!white}
 
-\RequirePackage[Tol, pgf]{colorblind} % Tol colorblind-friendly palette
+% --- Bibliography and captions ---
+\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=15,minnames=3,backref=false,doi=true,isbn=false,url=true]{biblatex}
+\RequirePackage[belowskip=12pt,aboveskip=4pt,figurename=\figurename,tablename=\tablename,labelfont=bf]{caption}
 
-\RequirePackage[unicode=true]{hyperref} % Hyperlinks and PDF metadata
+% --- PDF links and metadata ---
+\RequirePackage[unicode=true]{hyperref}
+\RequirePackage{bookmark}
 \hypersetup{
 	pdfborder={0 0 0},
-	breaklinks=true
-} % No frames around links by default
+	breaklinks=true,
+	pdfdisplaydoctitle=true,
+	bookmarksnumbered=true
+}
+\ifenglish
+	\hypersetup{pdflang={en-US}}
+\else
+	\hypersetup{pdflang={de-DE}}
+\fi
+\ifonline
+	\hypersetup{pdfpagemode=UseOutlines,pdfstartview=FitH,bookmarksopen=true}
+\else
+	\hypersetup{pdfpagemode=UseNone,pdfstartview=Fit}
+\fi
+\pdfstringdefDisableCommands{\def\\{ }\def\newline{ }}
+% Avoid duplicate page anchors when front matter inserts a blank verso.
+\AddToHook{cmd/frontmatter/before}{\hypersetup{pageanchor=false}}
+\AddToHook{cmd/frontmatter/after}{\hypersetup{pageanchor=true}}
+\AtBeginDocument{%
+	\ifx\@thesissubject\@empty
+		\ifdiss\def\ias@pdfsubject{Dissertation}\else\let\ias@pdfsubject\@thesistype\fi
+	\else
+		\let\ias@pdfsubject\@thesissubject
+	\fi
+	\hypersetup{
+		pdftitle={\@title},
+		pdfauthor={\@author},
+		pdfsubject={\ias@pdfsubject},
+		pdfkeywords={\@thesiskeywords},
+		pdfcreator={LuaLaTeX with IASthesis}
+	}%
+}
 
-\RequirePackage[most]{tcolorbox} % Styled/colored boxes with breakable support
-\newtcolorbox{tbox}[2][1.0]{colback=lightgray, colframe=darkgray, fonttitle=\bfseries, adjusted title=#2, boxsep=1mm, left=1mm, right=1mm, width=#1\textwidth}
+% --- Callout boxes ---
+% Shared layout with semantic colors and icons.
+\RequirePackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
 
-\RequirePackage{xparse}          % LaTeX3 argument parsing (optional args)
+\RequirePackage{fontawesome5}
 
-% Icons (Font Awesome 5)
-%   Requires TeX Live 2019+ (or equivalent). If you only have FA4, swap to \usepackage{fontawesome} and replace \faIcon{...}.
-\RequirePackage{fontawesome5} % Icon fonts used in callout boxes
-
-%--- Shared base style for example boxes (layout & typography) ---
 \tcbset{
 	calloutbase/.style={
-			enhanced, breakable,                       % page breaks OK
+			enhanced, breakable,
 			boxrule=0.6pt, arc=2pt,
-			left=12mm, right=6mm, top=6pt, bottom=6pt, % room for the left icon
+			left=12mm, right=6mm, top=6pt, bottom=6pt,
 			colback=white, colframe=black!25,
-			fonttitle=\bfseries, coltitle=black,       % black title text
+			fonttitle=\bfseries, coltitle=black,
 			attach boxed title to top left={yshift=-2mm, xshift=2mm},
 			boxed title style={colback=white, colframe=black!25},
-			% Ensure comfortable list spacing inside all callout boxes
 			before upper={%
 					\setlist[itemize]{itemsep=4pt,parsep=2pt,topsep=4pt,partopsep=3pt}%
 					\setlist[enumerate]{itemsep=4pt,parsep=2pt,topsep=4pt,partopsep=3pt}%
 					\setlist[description]{itemsep=4pt,parsep=2pt,topsep=4pt,partopsep=3pt}%
 				}
-		}
+	}
 }
 
-%--- Helper: icon overlays so the symbol appears on every segment (unbroken/first/middle/last) ---
 \newcommand{\CalloutOverlay}[1]{%
 	\node[anchor=west, xshift=3mm] at (frame.west) {#1};%
 }
-\newcommand{\FAiconsize}{\large} % tweak icon size here
+\newcommand{\FAiconsize}{\large}
 
-%=== SUCCESS (positive) box ===
-\NewTColorBox{successbox}{ O{} O{} }{%
+% The first optional argument accepts tcolorbox keys; the second retains the
+% legacy custom-title form while providing a localized default.
+\NewTColorBox{successbox}{ O{} O{\iassuccessname} }{%
 	calloutbase,
-	title={\IfNoValueTF{#2}{Success}{#2}},      % \begin{successbox}[Optional title]
+	title={#2},
 	colframe=oiGreen, colback=oiGreenFill,
-	borderline west={3pt}{0pt}{oiGreen},        % thick colored rule for non-color cue
+	borderline west={3pt}{0pt}{oiGreen},
 	overlay unbroken={\CalloutOverlay{\textcolor{oiGreen}{\FAiconsize\faIcon{check-circle}}}},
 	overlay first   ={\CalloutOverlay{\textcolor{oiGreen}{\FAiconsize\faIcon{check-circle}}}},
 	#1
 }
 
-%=== ERROR (negative) box ===
-\NewTColorBox{errorbox}{ O{} O{} }{%
+\NewTColorBox{errorbox}{ O{} O{\iaserrorname} }{%
 	calloutbase,
-	title={\IfNoValueTF{#2}{Error}{#2}},        % \begin{errorbox}[Optional title]
+	title={#2},
 	colframe=oiVermilion, colback=oiVermilionFill,
 	borderline west={3pt}{0pt}{oiVermilion},
 	overlay unbroken={\CalloutOverlay{\textcolor{oiVermilion}{\FAiconsize\faIcon{times-circle}}}},
@@ -318,100 +400,93 @@
 	#1
 }
 
-%=== INFO (explanatory) box ===
-\NewTColorBox{infobox}{ O{} O{} }{%
+\NewTColorBox{infobox}{ O{} O{\iasinfoname} }{%
 	calloutbase,
-	title={\IfNoValueTF{#2}{Info}{#2}},         % \begin{infobox}[Optional title]
+	title={#2},
 	colframe=oiGrey, colback=oiGreyFill,
-	borderline west={3pt}{0pt}{oiGrey},         % thick colored rule for non-color cue
+	borderline west={3pt}{0pt}{oiGrey},
 	overlay unbroken={\CalloutOverlay{\textcolor{oiGrey}{\FAiconsize\faIcon{info-circle}}}},
 	overlay first   ={\CalloutOverlay{\textcolor{oiGrey}{\FAiconsize\faIcon{info-circle}}}},
 	#1
 }
 
-\urlstyle{same}  % Keep URL font consistent with body text
+\urlstyle{same}
 
-\RequirePackage[backend=biber,style=ieee,giveninits=true,maxnames=15,minnames=3,natbib,autopunct,backref=false,doi=true,isbn=false,url=true,backrefstyle=three+,defernumbers=true, citestyle=numeric-comp]{biblatex} % Bibliography management (biber backend, IEEE style)
+% --- Cross-references ---
+\RequirePackage[nameinlink]{cleveref}
 
-\RequirePackage[belowskip=12pt,aboveskip=4pt,figurename=\figurename,tablename=\tablename,labelfont=bf]{caption} % Caption spacing and label styles
+% Allow modest emergency stretching before reporting overfull lines.
+\setlength{\emergencystretch}{3em}
 
-\RequirePackage{subcaption} % Sub-figures environment and captions
-\RequirePackage[countmax]{subfloat} % Alternative subfigure support
-
-%% Tikz
-\RequirePackage{pgfplots} % High-quality plots with TikZ/pgf
-\usetikzlibrary{shapes, arrows, positioning, fit, calc, patterns, decorations.pathmorphing,decorations.pathreplacing,decorations.shapes,decorations.text, math} % Common TikZ libraries used across figures
-\usepgfplotslibrary{groupplots}% Grouped plots; also handy with Inkscape pdf_tex imports
-\pgfplotsset{compat=newest} % Use the latest pgfplots API
-\RequirePackage{import} % Import subfiles while preserving paths
-\newlength\fheight % Keep MATLAB plots consistently sized
-\newlength\fwidth % Keep MATLAB plots consistently sized
-\RequirePackage[european,straightvoltages,straightlabels,american inductors]{circuitikz} % Electrical circuit schematics
-
-% % % % Table related features
-
-% Define new column types to allow centering and width of each cell
-\RequirePackage{array} % Extended array and tabular features
-%\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-%\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
-% Tables 
-\RequirePackage{tabularx, etoolbox, booktabs} % Flexible tables and professional rules
-\RequirePackage{multirow} % Row spanning in tables
-%\newcommand{\rarray}[1]{\renewcommand{\arraystretch}{#1}} % Slightly enlarged cells
-
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-%
-
-%% Head and foot
-\RequirePackage[includeheadfoot,top=0cm,headheight=16pt,margin=2.5cm]{geometry} % Page geometry and margins
-\RequirePackage{titlesec} % Sectioning title formatting
-\RequirePackage{fancyhdr} % Custom headers and footers
+% --- Geometry and page styles ---
+% Print adds a 10 mm binding offset; override it with \geometry in header.tex.
+\ifonline
+	\RequirePackage[includeheadfoot,top=0cm,headheight=16pt,margin=2.5cm]{geometry}
+\else
+	\RequirePackage[includeheadfoot,top=0cm,headheight=16pt,margin=2.5cm,bindingoffset=10mm]{geometry}
+\fi
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+% Front matter hides folios; the ToC flag controls continuation headers.
+\newif\ifias@frontmatter
+\newif\ifias@contents
+\ias@frontmatterfalse
+\ias@contentsfalse
+\newcommand{\ias@folio}{\ifias@frontmatter\else\thepage\fi}
 \pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\chaptermark}[1]{%
+	\if@mainmatter
+		\markboth{\thechapter.\ #1}{}%
+	\else
+		\markboth{#1}{}%
+	\fi
+}
+% Set a running title without changing the ToC entry or PDF bookmark.
+\newcommand{\chaptershorttitle}[1]{\markboth{\thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{#1}{}}
 \fancyhf{}
 \ifonline
 	\fancyhead[L]{\@author}
 	\fancyhead[R]{\@shorttitle}
 	\fancyhead[C]{}
-	\fancyfoot[R]{}%outer
-	\fancyfoot[L]{}%inner
-	\fancyfoot[C]{\thepage}
+	\fancyfoot[R]{}
+	\fancyfoot[L]{}
+	\fancyfoot[C]{\ias@folio}
 	\fancypagestyle{plain}{
 		\fancyhf{}
-		\fancyfoot[C]{\thepage}%outer
+		\fancyfoot[C]{\ias@folio}
 		\renewcommand{\headrulewidth}{0pt}
 	}
 \else
-	\fancyhead[LE]{ \thechapter~\leftmark}
-	\fancyhead[RO]{ \leftmark~\thechapter}
-	\fancyhead[RE,LO]{\rightmark}
+	\fancyhead[LE]{\ifias@contents\iastocheadername\else\nouppercase{\leftmark}\fi}
+	\fancyhead[RO]{\ifias@contents\iastocheadername\else\@author\fi}
+	\fancyhead[RE,LO]{}
 	\fancyhead[C]{}
-	\fancyfoot[RO,LE]{\thepage}%outer
-	\fancyfoot[RE,LO]{}%inner
+	\fancyfoot[RO,LE]{\ias@folio}
+	\fancyfoot[RE,LO]{}
 	\fancyfoot[C]{}
 	\fancypagestyle{plain}{
 		\fancyhf{}
-		\fancyfoot[RO,LE]{\thepage}%outer
+		\fancyfoot[RO,LE]{\ias@folio}
 		\renewcommand{\headrulewidth}{0pt}
 	}
 \fi
 
+% Paragraph, display, and footnote spacing.
 \tolerance=500
 
 \predisplaypenalty=0
 \clubpenalty=10000
 \widowpenalty=10000
 
-\setlength\footnotesep{7.7\p@} % Space between footnotes
+\setlength\footnotesep{7.7\p@}
 
-\newdimen\betweenumberspace          % dimension for space between
-\betweenumberspace=5\p@               % number and text of titles
-\newdimen\headlineindent             % dimension for space of
-\headlineindent=2.5cc                % number and gap of running heads
+\newdimen\betweenumberspace
+\betweenumberspace=5\p@
+\newdimen\headlineindent
+\headlineindent=2.5cc
 
+% Screen clears directly; print inserts empty verso pages as needed.
 \ifonline
 	\def\cleardoublepage{\clearpage}
 
@@ -428,121 +503,185 @@
 	\newcommand{\startnewpage}{\if@openright\clearemptydoublepage\else\clearpage\fi}
 \fi
 
-% (re)define sectioning
+% --- Sectioning and matter divisions ---
 \setcounter{secnumdepth}{3}
 
 \def\seccounterend{}
 \def\seccountergap{\hskip\betweenumberspace}
 \def\@seccntformat#1{\csname the#1\endcsname\seccounterend\seccountergap\ignorespaces}
-%
 \let\firstmark=\botmark
-%
 \@ifundefined{thechapterend}{\def\thechapterend{}}{}
-%
 \let\cleardoublepagebackup\cleardoublepage
-%
 
-%% Matter definitions
+% Front/back matter omit chapter numbers; main matter restores them.
 \newif\if@mainmatter \@mainmattertrue
 \renewcommand\frontmatter{\startnewpage
+	\ias@frontmattertrue
 	\pagestyle{fancy}
 	\@mainmatterfalse\pagenumbering{roman}
 	\setcounter{page}{1}
 	\titleformat{\chapter}
-	[display] % The paragraph shape
-	{\bfseries\huge} % Format of the main text
-	{} % Label is ommitted here, since it is below
+	[display]
+	{\bfseries\huge}
+	{}
 	{0ex}
 	{\vspace{-5ex}\titlerule\vspace{1.5ex}\filright~}
 	[\vspace{1ex}\titlerule]
 
 	\let\cleardoublepage\clearpage
 }
-%
 \renewcommand\mainmatter{
 	\let\cleardoublepage\cleardoublepagebackup
 	\clearemptydoublepage
+	\ias@frontmatterfalse
 	\pagestyle{fancy}
 	\@mainmattertrue
 	\pagenumbering{arabic}
 	\titleformat{\chapter}
-	[display] % The paragraph shape
-	{\bfseries\huge} % Format of the main text
-	{} % Label is ommitted here, since it is below
+	[display]
+	{\bfseries\huge}
+	{}
 	{0ex}
 	{\vspace{-5ex}\titlerule\vspace{1.5ex}\filright \thechapter~}
 	[\vspace{1ex}\titlerule]
 	\let\cleardoublepage\cleardoublepagebackup
 }
-%
 \renewcommand\backmatter{
 	\pagestyle{fancy}
 	\clearemptydoublepage
+	\ias@frontmatterfalse
 	\@mainmatterfalse
 	\titleformat{\chapter}
-	[display] % The paragraph shape
-	{\bfseries\huge} % Format of the main text
-	{} % Label is ommitted here, since it is below
+	[display]
+	{\bfseries\huge}
+	{}
 	{0ex}
 	{\vspace{-5ex}\titlerule\vspace{1.5ex}\filright~}
 	[\vspace{1ex}\titlerule]
 
 }
-%
 
-%% Indices
-\makeindex
-\RequirePackage[acronym, symbols, shortcuts,nopostdot,nogroupskip,section,nonumberlist]{glossaries-extra}
+% Keep the ToC flag active through the final shipped continuation page.
+\let\ias@tableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+	\clearpage
+	\ias@contentstrue
+	\ias@tableofcontents
+	\clearpage
+	\ias@contentsfalse
+}
+
+% --- Glossaries and generated lists ---
+% MakeIndex handles glossary sorting; datatool locale modules are not required.
+\RequirePackage[nolocale]{datatool-base}
+\RequirePackage[acronym,symbols,shortcuts,nopostdot,nogroupskip,section,nonumberlist,toc]{glossaries-extra}
 \renewcommand*{\glsgroupskip}{}
-% Define an indexed glossary for notation (requires makeglossaries)
-% File extensions: .not (input), .ntn (output), .ntg (log)
+% Notation files: .ntn input, .not output, .ntg log.
 \newglossary[ntg]{notation}{not}{ntn}{Notation}
 \makeglossaries
 
-%%%%%%%%%%%%%%%%
+% List-of-* formatting and ToC entries.
 \renewcommand\listoffigures{%
+	\phantomsection
 	\section*{\listfigurename}%
-	\@mkboth{\MakeUppercase\listfigurename}%
-	{\MakeUppercase\listfigurename}%
+	\addcontentsline{toc}{section}{\listfigurename}%
+	\@mkboth{\listfigurename}{\listfigurename}%
 	\@starttoc{lof}%
 }
 \renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
 \renewcommand\listoftables{%
+	\phantomsection
 	\section*{\listtablename}%
-	\@mkboth{%
-		\MakeUppercase\listtablename}%
-	{\MakeUppercase\listtablename}%
+	\addcontentsline{toc}{section}{\listtablename}%
+	\@mkboth{\listtablename}{\listtablename}%
 	\@starttoc{lot}%
 }
 \let\l@table\l@figure
 
-% lists environment
-\newenvironment{lists}
-{\clearpage
-	\chapter{\listsname}
-	\phantomsection\addcontentsline{toc}{section}{\listtablename}\listoftables
-	\phantomsection\addcontentsline{toc}{section}{\listfigurename}\listoffigures
-	\printglossary[type=\acronymtype,title=\acrname]
-	\printglossary[title=\glossaryname]
-	\printglossary[type=notation, title=\notationname]
-	\printglossary[type=symbols]
-	\printbibliography[heading=subbibintoc,title=\refname]
-}{\clearpage}
-%
+\newcommand{\iaslistofalgorithms}{%
+	\phantomsection
+	\section*{\listalgorithmname}%
+	\addcontentsline{toc}{section}{\listalgorithmname}%
+	\@mkboth{\listalgorithmname}{\listalgorithmname}%
+	\@namedef{l@algorithm}{\@dottedtocline{1}{1.5em}{2.3em}}%
+	\@starttoc{loa}%
+}
 
-% abstract environment
+\defbibheading{iaslistsbib}[\refname]{%
+	\phantomsection
+	\section*{#1}%
+	\addcontentsline{toc}{section}{#1}%
+}
+
+% No argument prints all defaults; a comma-separated list selects entries, e.g. \lists[LoT,LoF].
+\ExplSyntaxOn
+\clist_const:Nn \c__ias_default_lists_clist
+{ lot,lof,loa,acronyms,glossary,notation,symbols,bibliography }
+\seq_new:N \l__ias_seen_lists_seq
+
+\cs_new_protected:Npn \__ias_print_list:n #1
+{
+	\str_case:nnF {#1}
+	{
+		{lot}{\listoftables}
+		{lof}{\listoffigures}
+		{loa}{\iaslistofalgorithms}
+		{acronyms}{\printglossary[type=\acronymtype,title=\acrname,toctitle=\acrname]}
+		{glossary}{\printglossary[title=\glossaryname,toctitle=\glossaryname]}
+		{notation}{\printglossary[type=notation,title=\notationname,toctitle=\notationname]}
+		{symbols}{\printglossary[type=symbols,title=\iassymbolsname,toctitle=\iassymbolsname]}
+		{bibliography}{\printbibliography[heading=iaslistsbib,title=\refname]}
+	}
+	{\ClassWarning{IASthesis}{Unknown~list~selector~`#1'~ignored}}
+}
+
+\cs_generate_variant:Nn \seq_if_in:NnF { NV }
+\cs_generate_variant:Nn \seq_put_right:Nn { NV }
+\cs_generate_variant:Nn \__ias_print_list:n { V }
+
+\cs_new_protected:Npn \__ias_print_selector:n #1
+{
+	\tl_set:Nx \l_tmpa_tl { \str_lowercase:f { \tl_trim_spaces:n {#1} } }
+	\tl_if_blank:VTF \l_tmpa_tl
+	{\ClassWarning{IASthesis}{Empty~list~selector~ignored}}
+	{
+		\str_if_eq:VnTF \l_tmpa_tl {all}
+		{\clist_map_inline:Nn \c__ias_default_lists_clist {\__ias_print_selector:n {##1}}}
+		{
+			\seq_if_in:NVF \l__ias_seen_lists_seq \l_tmpa_tl
+			{
+				\seq_put_right:NV \l__ias_seen_lists_seq \l_tmpa_tl
+				\__ias_print_list:V \l_tmpa_tl
+			}
+		}
+	}
+}
+
+\NewDocumentCommand{\lists}{o}
+{
+	\clearpage
+	\chapter{\listsname}
+	\seq_clear:N \l__ias_seen_lists_seq
+	\IfNoValueTF{#1}
+	{\clist_map_inline:Nn \c__ias_default_lists_clist {\__ias_print_selector:n {##1}}}
+	{
+		\tl_if_blank:nTF {#1}
+		{\ClassWarning{IASthesis}{Empty~list~selection;~no~component~lists~printed}}
+		{\clist_map_inline:nn {#1} {\__ias_print_selector:n {##1}}}
+	}
+	\clearpage
+}
+\ExplSyntaxOff
+
+% --- Abstract and appendix ---
 \newenvironment{abstract}
 {\clearpage
 	\chapter*{\abstractname}
 	\thispagestyle{empty}
-	\setcounter{page}{0}
 }{\clearpage}
 
-% % Appendix
 \renewcommand\appendix{\par
-	\stepcounter{chapter}%
-	\setcounter{chapter}{1}%
-	\stepcounter{section}%
+	\setcounter{chapter}{0}%
 	\setcounter{section}{0}%
 	\setcounter{equation}{0}%
 	\setcounter{figure}{0}%
@@ -551,45 +690,76 @@
 	\pagestyle{fancy}%
 	\def\@chapapp{\appendixname}%
 	\gdef\thechapter{\@Alph\c@chapter}%
+	\gdef\theHchapter{appendix.\@Alph\c@chapter}%
+	\gdef\theHsection{\theHchapter.\arabic{section}}%
+	\refstepcounter{chapter}%
 	\chapter{\appendixname}%
+	\chaptershorttitle{\appendixname}%
 }
 
-%% Internal reference shortcuts
-\ifenglish\newcommand{\figref}[1]{Fig.~\ref{#1}}\fi
-\ifdeutsch\newcommand{\figref}[1]{Abb.~\ref{#1}}\fi
+% --- Reference and math helpers ---
+% Localized cleveref labels.
+\ifenglish
+	\crefname{figure}{Fig.}{Figs.}
+	\Crefname{figure}{Fig.}{Figs.}
+	\crefname{table}{Tab.}{Tabs.}
+	\Crefname{table}{Tab.}{Tabs.}
+	\crefname{chapter}{Ch.}{Chs.}
+	\Crefname{chapter}{Ch.}{Chs.}
+	\crefname{section}{Sec.}{Secs.}
+	\Crefname{section}{Sec.}{Secs.}
+	\crefname{subsection}{Sec.}{Secs.}
+	\Crefname{subsection}{Sec.}{Secs.}
+	\crefname{subsubsection}{Sec.}{Secs.}
+	\Crefname{subsubsection}{Sec.}{Secs.}
+	\crefname{algorithm}{Alg.}{Algs.}
+	\Crefname{algorithm}{Alg.}{Algs.}
+\fi
+\ifdeutsch
+	\crefname{figure}{Abb.}{Abb.}
+	\Crefname{figure}{Abb.}{Abb.}
+	\crefname{table}{Tab.}{Tab.}
+	\Crefname{table}{Tab.}{Tab.}
+	\crefname{chapter}{Kap.}{Kap.}
+	\Crefname{chapter}{Kap.}{Kap.}
+	\crefname{section}{Abschn.}{Abschn.}
+	\Crefname{section}{Abschn.}{Abschn.}
+	\crefname{subsection}{Abschn.}{Abschn.}
+	\Crefname{subsection}{Abschn.}{Abschn.}
+	\crefname{subsubsection}{Abschn.}{Abschn.}
+	\Crefname{subsubsection}{Abschn.}{Abschn.}
+	\crefname{algorithm}{Alg.}{Alg.}
+	\Crefname{algorithm}{Alg.}{Alg.}
+\fi
 
-\newcommand{\tabref}[1]{Tab.~\ref{#1}}
+% Compatibility aliases for manuscripts created with IASthesis <= 1.1.
+\newcommand{\figref}[1]{\cref{#1}}
+\newcommand{\tabref}[1]{\cref{#1}}
+\newcommand{\capref}[1]{\cref{#1}}
 
-\ifenglish\newcommand{\capref}[1]{Ch.~\ref{#1}}\fi
-\ifdeutsch\newcommand{\capref}[1]{Kap.~\ref{#1}}\fi
-
-%  special signs and characters
-\RequirePackage{upgreek} % Upright Greek letters in math
+% Common mathematical notation.
 \newcommand{\D}{\mathrm{d}}
 \newcommand{\E}{\mathrm{e}}
 \let\eul=\E
-\newcommand{\I}{{\rm j}}
+\newcommand{\I}{\mathrm{j}}
 \let\imag=\I
 \DeclareMathOperator{\exponential}{exp}
 \DeclareMathOperator{\trace}{tr}
-\DeclareMathOperator{\argmax}{argmax}
-\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator{\variance}{var}
-\DeclareMathOperator{\T}{^{\mkern-1.5mu\mathsf{T}}} %Transpose
+\newcommand{\T}{^{\mkern-1.5mu\mathsf{T}}}
 \newcommand{\const}{\mathrm{const}\@ifnextchar.{}{.}}
 
-\def\vec#1{\ensuremath{\mathchoice
-		{\mbox{\boldmath$\displaystyle\mathbf{#1}$}}
-		{\mbox{\boldmath$\textstyle\mathbf{#1}$}}
-		{\mbox{\boldmath$\scriptstyle\mathbf{#1}$}}
-		{\mbox{\boldmath$\scriptscriptstyle\mathbf{#1}$}}}}%
+\newcommand{\vect}[1]{\symbfit{#1}}
 
 \setlength\arraycolsep{1.5\p@}
 \setlength\tabcolsep{1.5\p@}
 
-%% Table of contents
+% --- ToC and footnote layout ---
 \setcounter{tocdepth}{2}
 
+% Number-column widths for nested ToC entries.
 \newdimen\tocchpnum
 \newdimen\tocsecnum
 \newdimen\tocsectotal
@@ -600,12 +770,12 @@
 \newdimen\tocparanum
 \newdimen\tocparatotal
 \newdimen\tocsubparanum
-\tocchpnum=20\p@            % chapter {\bf 88.} \@plus 5.3\p@
-\tocsecnum=22.5\p@          % section 88.8. plus 4.722\p@
-\tocsubsecnum=30.5\p@       % subsection 88.8.8 plus 4.944\p@
-\tocsubsubsecnum=38\p@      % subsubsection 88.8.8.8 plus 4.666\p@
-\tocparanum=45\p@           % paragraph 88.8.8.8.8 plus 3.888\p@
-\tocsubparanum=53\p@        % subparagraph 88.8.8.8.8.8 plus 4.11\p@
+\tocchpnum=20\p@
+\tocsecnum=22.5\p@
+\tocsubsecnum=30.5\p@
+\tocsubsubsecnum=38\p@
+\tocparanum=45\p@
+\tocsubparanum=53\p@
 \def\calctocindent{%
 	\tocsectotal=\tocchpnum
 	\advance\tocsectotal by\tocsecnum
@@ -626,7 +796,6 @@
 			\interlinepenalty\@M
 			\leavevmode
 			\ifnum #1>\c@secnumdepth \@tempdima\z@ \else \@tempdima #3\fi
-			%    \@tempdima #3\relax
 			\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
 			{#4}\nobreak
 			\leaders\hbox{$\m@th
@@ -636,13 +805,13 @@
 			\hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor #5}%
 			\par}%
 	\fi}
-%
 \def\l@section{\@dottedtocline{1}{\tocchpnum}{\tocsecnum}}
 \def\l@subsection{\@dottedtocline{2}{\tocsectotal}{\tocsubsecnum}}
 \def\l@subsubsection{\@dottedtocline{3}{\tocsubsectotal}{\tocsubsubsecnum}}
 \def\l@paragraph{\@dottedtocline{4}{\tocsubsubsectotal}{\tocparanum}}
 \def\l@subparagraph{\@dottedtocline{5}{\tocparatotal}{\tocsubparanum}}
 
+% Footnote rule and spacing.
 \renewcommand\footnoterule{%
 	\kern-3\p@
 	\hrule\@width 36mm
@@ -653,23 +822,27 @@
 
 \footnotesep 9\p@
 
-%%% Title Page
+% --- Title pages ---
+% Medium-aware variants for dissertations and other theses.
 \def\maketitle{
+	% Disable title-page anchors to avoid collisions with main-matter page 1.
+	\hypersetup{pageanchor=false}%
 	\ifdiss{
-		%Title Page Master
 		\newpage
 		\pagestyle{empty}
-		\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
+		\ifonline
+			\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
+		\else
+			\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm,bindingoffset=10mm}
+		\fi
 		\null
 		\begingroup
 		\def\and{\unskip, }
 		\parindent=\z@
 		\pretolerance=10000
 		\rightskip=\z@ \@plus 3cm
-		%%%%%%%%%%
 		\begin{center}
 			\includegraphics[height=3.0cm]{Logos/Logo_Kombi_IAS_Blau}
-			%\linespread{1.0}
 			\sffamily
 			\vfill
 			{\Huge \begin{spacing}{1.1}\textbf{\\[13mm] \@title \\[15mm]}\end{spacing}}
@@ -699,10 +872,13 @@
 		\restoregeometry
 		\newpage
 	}\else{
-		%Title Page Master
 		\newpage
 		\pagestyle{empty}
-		\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
+		\ifonline
+			\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm}
+		\else
+			\newgeometry{top=2.5cm,left=2.5cm,right=2.5cm,bottom=2.5cm,bindingoffset=10mm}
+		\fi
 		\null
 		\begingroup
 		\def\and{\unskip, }
@@ -735,7 +911,7 @@
 		\restoregeometry
 		\newpage
 	}\fi
+	\hypersetup{pageanchor=true}%
 }
 
 \endinput
-%end of file IASthesis.cls

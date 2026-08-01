@@ -1,40 +1,47 @@
-%\documentclass[online, deutsch]{IASthesis}
-%\documentclass[deutsch]{IASthesis}
-%\documentclass[english]{IASthesis}
-\documentclass[english, online]{IASthesis}
-%\documentclass[deutsch,diss]{IASthesis}
+\documentclass{IASthesis}
 
-%% Data for bachelor or master thesis
-\title{Really a Very Very\\ Extremely Long Title\\ for Such a Thesis}
+% Class options (comma-separated):
+% - Language: english (default) or deutsch.
+% - Medium: medium=screen (default, digital) or medium=print (duplex with binding offset).
+% - Dissertation: diss adds a dissertation title page and CV; final marks the dissertation as approved.
+% - Optional front matter: thanks inserts acknowledgements before the abstract.
+
+% Examples:
+% \documentclass[deutsch,medium=print]{IASthesis}
+% \documentclass[diss,final,thanks,medium=print]{IASthesis}
+
+%% Data for bachelor's or master's thesis
+\title{Really a very very\\extremely long title\\for such a thesis}
 \shorttitle{Title in Short}
 \author{Me Myself}
-\thesistype{Master Thesis}
+\thesistype{Master's Thesis}
 \thesisnr{MA0815}
 \matrnr{08193784}
 \supervisora{Prof. Dr.-Ing. Oliver Wallscheid}
 \supervisorb{Mr. N.N.}
 \filingdate{\today}
+\keywords{thesis template, academic writing, LaTeX}
 
-%% Data for ph.d. thesis
-% \title{Really a Very Very Extremely Long Title for Such a Thesis}
+%% Data for PhD thesis
+% \title{Really a very very extremely long title for such a thesis}
 % \shorttitle{Title in Short}
 % \author{Me Myself}
 % \supervisora{Prof. Dr.-Ing. Oliver Wallscheid}
 % \supervisorb{Prof. Dr.-Ing. N.N.}
-% \birthdate{30.02.1999}
-% \birthplace{Hintertupfingen}
-% \examdate{31.02.2025}
-% \thesisnr{333}
-% \publicationyear{2030}
+% \birthdate{1 January 1990}
+% \birthplace{Siegen}
+% \examdate{1 July 2026}
+% \thesisnr{123}
+% \publicationyear{2026}
 
-\bibliography{references.bib}
+\addbibresource{references.bib}
 
-\input{chapters/header} %Place custom commands here
-\input{chapters/acronyms.tex} %Place acronyms here
-\input{chapters/glossaries.tex} %Place glossary entries here (very optional for a thesis - just mentioned for the sake of completeness)
+\input{chapters/header} % Place custom commands here
+\input{chapters/acronyms.tex} % Place acronyms here
+\input{chapters/glossaries.tex} % Place optional glossary entries here
 
-\input{chapters/notation.tex} %Place notation entries here
-\input{chapters/symbols.tex} %Place symbold entries here
+\input{chapters/notation.tex} % Place notation entries here
+\input{chapters/symbols.tex} % Place symbol entries here
 
 \begin{document}
 
@@ -42,6 +49,9 @@
 
 \frontmatter
 \input{chapters/declaration}
+\ifiasthanks
+	\input{chapters/acknowledgements}
+\fi
 \input{chapters/abstract}
 
 \tableofcontents
@@ -56,7 +66,15 @@
 \backmatter
 
 \input{chapters/appendix.tex}
-\lists
+\lists % Add tables, figures, algorithms, acronyms, glossary, notation, symbols, and bibliography.
+% Optional: \lists[LoT,LoF,LoA,acronyms,bibliography] selects lists in the stated order.
+% Selectors: LoT (tables), LoF (figures), LoA (algorithms), acronyms, glossary, notation, symbols, bibliography, and all.
 
-\ifdiss\iffinal\input{chapters/CV}\fi\fi % CV only for ph.d. dissertation and final version (otherwise will not be printed). Is always structured in German, as the CV is only needed for the formal ph.d. evaluation process at our faculty.
+\ifdiss
+	\begingroup
+	\pagestyle{empty}
+	\input{chapters/CV}
+	\clearpage
+	\endgroup
+\fi % CV scaffold for a PhD dissertation; include only if required by current regulations.
 \end{document}
